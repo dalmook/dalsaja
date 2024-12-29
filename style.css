@@ -6,7 +6,7 @@
 /* 커스텀 폰트 정의 */
 @font-face {
     font-family: 'hanchanzhengkaiti';
-    src: url('./hanchanzhengkaiti.ttf') format('truetype');
+    src: url('https://github.com/dalmook/dalhanja/blob/5d0ae8270b534bd99d42f76ad34f4550faa2f58d/hanchanzhengkaiti.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
