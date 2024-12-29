@@ -140,13 +140,34 @@ button:hover {
     color: #1e90ff;
 }
 
-#speak-btn {
-    font-size: 24px;
-    padding: 5px 10px;
-    cursor: pointer;
-    background-color: #ffeb3b;
+/* canvas-container 스타일링 */
+.canvas-container {
+    position: relative;
+    display: inline-block; /* 캔버스와 버튼을 인라인 블록으로 배치 */
+}
+
+/* 스피커 버튼 위치 조정 */
+.speak-btn {
+    position: absolute;
+    top: 10px; /* 캔버스 상단에서 10px 아래 */
+    right: 10px; /* 캔버스 우측에서 10px 왼쪽 */
+    background-color: rgba(30, 144, 255, 0.8); /* 반투명 파란색 배경 */
+    color: #ffffff;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.speak-btn:hover {
+    background-color: rgba(30, 144, 255, 1);
+    transform: scale(1.1);
 }
 
 .sajaseongeo-details {
