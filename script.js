@@ -68,14 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------------------------
 
     let selectedLevel = '초급'; // 현재 선택된 난이도 ('초급', '중급', '고급')
-    let selectedQuizType = ''; // 현재 선택된 퀴즈 유형 ('meaningReading' 또는 'sajaseongeo')
+    let selectedQuizType = ''; // 현재 선택된 퀴즈 유형 ('meaningChinese' 또는 'sajaseongeo')
     let quizQuestions = []; // 퀴즈 질문 배열
     let sajaseongeoData = []; // 사자성어 데이터 배열
     let currentIndex = 0;
     let isRandom = false;
     let shuffledIndices = [];
     let isProcessing = false; // 매칭 게임 처리 중 여부
-    let svgLoopInterval = null; // SVG 애니메이션 루프 타이머
+    let svgLoopInterval = null; // SVG 애니메이션 루프 타이머 (삭제 예정)
     let currentUtterances = [];
     let currentSajaseongeo = null; // 현재 사자성어
 
@@ -319,12 +319,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // 기존 utterances 배열 초기화
         currentUtterances = [];
 
-        const koreanText = `${currentSajaseongeo.뜻}`;
-        const chineseText = currentSajaseongeo.중국어;
+        const koreanText = `${currentSajaseongeo.사자성어}`;
+        const meaningText = `${currentSajaseongeo.뜻}`;
+        const chineseText = `${currentSajaseongeo.중국어}`;
 
         // 안드로이드 환경에서 TTS 지원 시
         if (typeof Android !== 'undefined' && Android.speak) {      
-            Android.speak(koreanText, chineseText); // 두 개의 파라미터로 전달
+            Android.speak(koreanText, meaningText, chineseText); // 세 개의 파라미터로 전달
         }
         // 웹 브라우저에서 TTS 지원 시
         else if ('speechSynthesis' in window) {
@@ -332,6 +333,11 @@ document.addEventListener('DOMContentLoaded', () => {
             utteranceKorean.lang = 'ko-KR';
             window.speechSynthesis.speak(utteranceKorean);
             currentUtterances.push(utteranceKorean);
+
+            const utteranceMeaning = new SpeechSynthesisUtterance(meaningText);
+            utteranceMeaning.lang = 'ko-KR';
+            window.speechSynthesis.speak(utteranceMeaning);
+            currentUtterances.push(utteranceMeaning);
 
             const utteranceChinese = new SpeechSynthesisUtterance(chineseText);
             utteranceChinese.lang = 'zh-CN';
@@ -659,7 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sajaseongeoCharacter.innerText = '';
             sajaseongeoMeaning.innerText = '';
             writingCanvas.getContext('2d').clearRect(0, 0, writingCanvas.width, writingCanvas.height);
-            document.getElementById('stroke-order-svg').src = '';
+            // 스피커 아이콘은 기존 'speak-btn'을 활용
             markCompletedCheckbox.checked = false;
             markCompletedCheckbox.disabled = true;
             currentSajaseongeo = null;
@@ -707,7 +713,9 @@ document.addEventListener('DOMContentLoaded', () => {
         ctxCanvas.fillText(sajaseongeoText, canvasWidth / 2, canvasHeight / 2);
         ctxCanvas.globalAlpha = 1.0; // 다시 불투명하게
 
-        // 쓰기순서 SVG 표시
+        // 쓰기순서 SVG 관련 코드 제거
+        /*
+        // 쓰기순서 SVG 표시 (제거됨)
         const strokeOrderSvg = document.getElementById('stroke-order-svg');
         if (currentSajaseongeo.쓰기순서) {
             if (svgLoopInterval) {
@@ -731,6 +739,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 svgLoopInterval = null;
             }
         }
+        */
 
         // 학습완료 체크박스 상태 설정
         markCompletedCheckbox.disabled = false;
@@ -904,23 +913,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    // ---------------------------
-    // 18. 매칭 게임 함수
-    // ---------------------------
-
-    // (이미 위에서 정의되었으므로 중복 제거)
-
-    // ---------------------------
-    // 19. 사자성어 표시 함수 (학습하기 화면)
-    // ---------------------------
-
-    // (이미 displaySajaseongeo 함수에서 처리됨)
-
-    // ---------------------------
-    // 20. 초기화 및 최고 점수 UI 초기화
-    // ---------------------------
-
-    // 이미 initializeHighScoresUI 함수에서 처리됨
 
 });
