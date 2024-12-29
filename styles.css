@@ -1,0 +1,445 @@
+/* style.css */
+
+/* 구글 폰트 임포트 */
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Gowun+Dodum&display=swap');
+
+/* 커스텀 폰트 정의 */
+@font-face {
+    font-family: 'hanchanzhengkaiti';
+    src: url('./hanchanzhengkaiti.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 기본 스타일 */
+body {
+    font-family: "hanchanzhengkaiti", sans-serif;
+    text-align: center;
+    background-color: #f0f8ff;
+    margin: 0;
+    padding: 0;
+}
+
+.screen {
+    display: none;
+    padding: 20px;
+}
+
+.screen.active {
+    display: block;
+}
+
+h1, h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.buttons, .game-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* 완료 사자성어 관리 화면 스타일 */
+#manage-learned-sajaseongeo-screen {
+    display: none;
+    padding: 20px;
+}
+
+#manage-learned-sajaseongeo-screen.active {
+    display: block;
+}
+
+/* 버튼 스타일 */
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #add8e6;
+}
+
+.difficulty-btn {
+    background-color: #87cefa;
+    color: white;
+    flex: 1 1 30%;
+    margin: 5px;
+}
+
+#study-btn {
+    background-color: #32cd32;
+    color: white;
+}
+
+#game-btn {
+    background-color: #ff8c00;
+    color: white;
+}
+
+#back-to-difficulty,
+#back-to-menu-from-study,
+#back-to-menu-from-game,
+#clear-canvas-btn,
+#next-quiz-btn,
+#restart-matching-btn {
+    background-color: #d3d3d3;
+    color: #333;
+    margin-top: 20px;
+    padding: 10px 20px;
+}
+
+#next-quiz-btn {
+    display: block;
+    margin: 20px auto;
+}
+
+.action-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.order-options {
+    margin-bottom: 20px;
+}
+
+.order-options label {
+    margin: 0 10px;
+    font-size: 16px;
+}
+
+#sajaseongeo-display {
+    margin: 20px auto;
+    max-width: 400px;
+    position: relative;
+}
+
+.sajaseongeo-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+#speak-btn {
+    font-size: 24px;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: #ffeb3b;
+    border: none;
+    border-radius: 5px;
+}
+
+.sajaseongeo-details {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* 읽기(음) 부분 애니메이션 */
+.reading {
+    animation: pulse 2s infinite;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    0% {
+        color: #000000;
+    }
+    50% {
+        color: #ff0000;
+    }
+    100% {
+        color: #000000;
+    }
+}
+
+.stroke-order {
+    display: none;
+}
+
+#writing-canvas {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    touch-action: none;
+}
+
+.completion-checkbox {
+    margin-top: 10px;
+}
+
+.completion-checkbox label {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.navigation-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+/* 추가된 버튼 스타일 */
+#go-first-btn {
+    margin-left: 10px; /* 버튼 간 간격 조정 */
+    background-color: #4CAF50; /* 배경색 변경 */
+    color: white; /* 글자색 변경 */
+}
+
+#go-first-btn:hover {
+    background-color: #45a049; /* 호버 시 배경색 변경 */
+}
+
+/* 게임 스타일 */
+.game-content {
+    margin-top: 20px;
+}
+
+.score-section {
+    margin-bottom: 15px;
+}
+
+.score-section p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+#quiz-question {
+    font-weight: bold;
+    color: #1e90ff;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+/* quiz-option-btn 스타일 */
+.quiz-option-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.quiz-option-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* quiz-feedback 스타일 */
+#quiz-feedback {
+    margin-top: 15px;
+    font-size: 1em;
+}
+
+/* next-quiz-btn 스타일 */
+#next-quiz-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #1e90ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#next-quiz-btn:hover {
+    background-color: #0d6efd;
+}
+
+#quiz-options, #matching-game-board {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#matching-feedback {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.match-item {
+    padding: 10px;
+    background-color: #add8e6;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.match-item.matched {
+    background-color: #90ee90;
+    cursor: default;
+}
+
+/* 학습완료 사자성어 관리 섹션 스타일 */
+.learned-sajaseongeo-section {
+    margin-top: 40px;
+}
+
+.learned-sajaseongeo-section h2 {
+    margin-bottom: 15px;
+}
+
+.learned-sajaseongeo-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.learned-sajaseongeo-item {
+    background-color: #f5f5f5;
+    padding: 8px 12px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.learned-sajaseongeo-item label {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 광고 컨테이너 스타일 */
+.adsense-container {
+    width: 100%;
+    max-width: 728px; /* 광고 최대 너비 설정 */
+    margin: 20px auto; /* 중앙 정렬 및 상하 마진 설정 */
+}
+
+.adsense-container2 {
+    width: 100%;
+    max-width: 728px; /* 데스크탑에서의 최대 너비 설정 */
+    margin: 300px auto; /* 중앙 정렬 및 상하 마진 설정 */
+    box-sizing: border-box; /* 패딩과 보더 포함 */
+    padding: 10px; /* 내부 여백 설정 */
+    border: 1px solid #ccc; /* 경계선 설정 */
+    overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
+    transition: max-height 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+/* stroke-order-svg 클래스 스타일링 */
+.stroke-order-svg {
+    position: absolute;
+    top: 10px;          /* 캔버스 상단으로부터의 거리 */
+    right: 10px;        /* 캔버스 우측으로부터의 거리 */
+    width: 80px;        /* SVG 이미지의 너비 */
+    height: 80px;       /* SVG 이미지의 높이 */
+    pointer-events: none; /* SVG 이미지가 캔버스 상호작용을 방해하지 않도록 설정 */
+}
+
+/* 반응형 디자인 */
+
+/* 모바일 세로 */
+@media (max-width: 600px) {
+    .adsense-container {
+        max-width: 100%; /* 모바일에서는 전체 너비 사용 */
+    } 
+    .adsense-container2 {
+        max-width: 100%; /* 모바일에서는 전체 너비 사용 */
+        max-height: 150px; /* 모바일에서의 최대 높이 설정 */
+        margin: 300px auto;
+        overflow-y: scroll; /* 세로 스크롤 추가 */
+    }    
+    .sajaseongeo-info {
+        font-size: 36px;
+    }
+
+    #writing-canvas {
+        width: 250px;
+        height: 250px;
+    }
+
+    .buttons button, .game-options button {
+        flex: 1 1 45%;
+    }
+
+    .learned-sajaseongeo-item {
+        font-size: 14px;
+    }
+    #matching-game-board {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        width: 100%;
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+
+    .match-item {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+}
+
+/* 모바일 가로 및 태블릿 */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .sajaseongeo-info {
+        font-size: 40px;
+    }
+
+    #writing-canvas {
+        width: 280px;
+        height: 280px;
+    }
+
+    .buttons button, .game-options button {
+        flex: 1 1 30%;
+    }
+
+    .learned-sajaseongeo-item {
+        font-size: 16px;
+    }
+}
+
+/* 데스크탑 */
+@media (min-width: 1025px) {
+    .sajaseongeo-info {
+        font-size: 48px;
+    }
+
+    #writing-canvas {
+        width: 300px;
+        height: 300px;
+    }
+
+    .buttons button, .game-options button {
+        flex: 1 1 20%;
+    }
+
+    .learned-sajaseongeo-item {
+        font-size: 18px;
+    }
+}
