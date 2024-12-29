@@ -66,30 +66,39 @@
 
 <!-- 학습하기 화면 -->
 <div id="study-screen" class="screen">
-<div id="sajaseongeo-display" class="sajaseongeo-display">
-    <div class="sajaseongeo-info">
-        <span id="sajaseongeo-chinese" class="sajaseongeo-chinese"></span>
-        <span id="sajaseongeo-character" class="sajaseongeo-character"></span>
+    <h1>학습하기 - <span id="study-level"></span></h1>
+    <div class="order-options">
+        <label>
+            <input type="radio" name="order" value="sequential" checked> 순차
+        </label>
+        <label>
+            <input type="radio" name="order" value="random"> 랜덤
+        </label>
+        <button id="back-to-menu-from-study">뒤로</button>
     </div>
-    <div class="sajaseongeo-details">
-        <p><span id="sajaseongeo-meaning" class="sajaseongeo-meaning"></span></p>
-    </div>
-    <!-- 캔버스와 스피커 버튼을 감싸는 컨테이너 추가 -->
-    <div class="canvas-container">
-        <canvas id="writing-canvas" width="300" height="300"></canvas>
-        <button id="speak-btn" class="speak-btn" title="음성 읽기">🔊</button>
-    </div>
-    <div class="canvas-buttons">
+    <div id="sajaseongeo-display" style="position: relative;">
+        <div class="sajaseongeo-info">
+            <span id="sajaseongeo-chinese"></span>
+            <button id="speak-btn">🔊</button>
+            <span id="sajaseongeo-character"></span>
+        </div>
+        <div class="sajaseongeo-details">
+            <p><span id="sajaseongeo-meaning"></span></p>
+        </div>
+        <canvas id="writing-canvas" width="300" height="200"></canvas>
         <button id="clear-canvas-btn" class="action-btn">쓰기 초기화</button>
         <button id="go-first-btn" class="action-btn">처음</button>
-        <button id="prev-btn" class="action-btn">이전</button>
-        <button id="next-btn" class="action-btn">다음</button>
+
+        <!-- 학습완료 체크박스 추가 -->
+        <div class="completion-checkbox">
+            <label>
+                <input type="checkbox" id="mark-completed"> 학습 완료
+            </label>
+        </div>
     </div>
-    <!-- 학습완료 체크박스 -->
-    <div class="completion-checkbox">
-        <label>
-            <input type="checkbox" id="mark-completed"> 학습 완료
-        </label>
+    <div class="navigation-buttons">
+        <button id="prev-btn">이전</button>
+        <button id="next-btn">다음</button>
     </div>
 </div>
 
