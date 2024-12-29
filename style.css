@@ -125,18 +125,18 @@ button:hover {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    font-size: 48px;
+    font-size: 28px;
     margin-bottom: 10px;
     flex-direction: column; /* 세로 방향으로 배치 */
 }
 
 #sajaseongeo-chinese {
-    font-size: 36px;
+    font-size: 30px;
     color: #ff4500; /* 중국어 텍스트 색상 변경 */
 }
 
 #sajaseongeo-character {
-    font-size: 48px;
+    font-size: 28px;
     color: #1e90ff;
 }
 
