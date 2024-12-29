@@ -64,48 +64,49 @@
         <button id="back-to-menu-from-managed">뒤로</button>
     </div>
 
-    <!-- 학습하기 화면 -->
-    <div id="study-screen" class="screen">
-        <h1>학습하기 - <span id="study-level"></span>급</h1>
-        <div class="order-options">
-            <label>
-                <input type="radio" name="order" value="sequential" checked> 순차
-            </label>
-            <label>
-                <input type="radio" name="order" value="random"> 랜덤
-            </label>
-            <button id="back-to-menu-from-study">뒤로</button>
+<!-- 학습하기 화면 -->
+<div id="study-screen" class="screen">
+    <h1>학습하기 - <span id="study-level"></span>급</h1>
+    <div class="order-options">
+        <label>
+            <input type="radio" name="order" value="sequential" checked> 순차
+        </label>
+        <label>
+            <input type="radio" name="order" value="random"> 랜덤
+        </label>
+        <button id="back-to-menu-from-study">뒤로</button>
+    </div>
+    <div id="sajaseongeo-display" style="position: relative;">
+        <div class="sajaseongeo-info">
+            <span id="sajaseongeo-chinese"></span>
+            <span id="sajaseongeo-character"></span>
+            <button id="speak-btn">🔊</button>
         </div>
-        <div id="sajaseongeo-display" style="position: relative;">
-            <div class="sajaseongeo-info">
-                <span id="sajaseongeo-character"></span>
-                <button id="speak-btn">🔊</button>
-            </div>
-            <div class="sajaseongeo-details">
-                <p><span id="sajaseongeo-meaning"></span> (<span id="sajaseongeo-reading" class="reading"></span>) - <span id="sajaseongeo-chinese"></span></p>
-            </div>
-            <!-- 쓰기 순서 SVG 이미지 추가 -->
-            <img id="stroke-order-svg" src="" alt="쓰기 순서" class="stroke-order-svg">            
-            <!-- 쓰기 순서 이미지를 숨깁니다 -->
-            <div class="stroke-order" style="display: none;">
-                <img id="stroke-order-img" src="" alt="쓰기 순서">
-            </div>
-            <canvas id="writing-canvas" width="300" height="300"></canvas>
-            <button id="clear-canvas-btn" class="action-btn">쓰기 초기화</button>
-            <button id="go-first-btn" class="action-btn">처음</button>
-            
-            <!-- 학습완료 체크박스 추가 -->
-            <div class="completion-checkbox">
-                <label>
-                    <input type="checkbox" id="mark-completed"> 학습 완료
-                </label>
-            </div>
+        <div class="sajaseongeo-details">
+            <p><span id="sajaseongeo-meaning"></span></p>
         </div>
-        <div class="navigation-buttons">
-            <button id="prev-btn">이전</button>
-            <button id="next-btn">다음</button>
+        <!-- 쓰기 순서 SVG 이미지 추가 -->
+        <img id="stroke-order-svg" src="" alt="쓰기 순서" class="stroke-order-svg">            
+        <!-- 쓰기 순서 이미지를 숨깁니다 -->
+        <div class="stroke-order" style="display: none;">
+            <img id="stroke-order-img" src="" alt="쓰기 순서">
+        </div>
+        <canvas id="writing-canvas" width="300" height="300"></canvas>
+        <button id="clear-canvas-btn" class="action-btn">쓰기 초기화</button>
+        <button id="go-first-btn" class="action-btn">처음</button>
+
+        <!-- 학습완료 체크박스 추가 -->
+        <div class="completion-checkbox">
+            <label>
+                <input type="checkbox" id="mark-completed"> 학습 완료
+            </label>
         </div>
     </div>
+    <div class="navigation-buttons">
+        <button id="prev-btn">이전</button>
+        <button id="next-btn">다음</button>
+    </div>
+</div>
 
     <!-- 낱말게임 화면 -->
     <div id="game-screen" class="screen">
