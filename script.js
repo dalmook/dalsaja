@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const studyLevelSpan = document.getElementById('study-level');
     const sajaseongeoCharacter = document.getElementById('sajaseongeo-character');
     const sajaseongeoMeaning = document.getElementById('sajaseongeo-meaning');
-    const sajaseongeoReading = document.getElementById('sajaseongeo-reading');
     const sajaseongeoChinese = document.getElementById('sajaseongeo-chinese');
     const speakBtn = document.getElementById('speak-btn');
     const writingCanvas = document.getElementById('writing-canvas');
@@ -242,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showScreen(gameScreen);
         quizGame.style.display = 'block';
         matchingGame.style.display = 'none';
-        initializeQuiz('meaningReading');
+        initializeQuiz('meaningChinese'); // 퀴즈(뜻중국어) 초기화
     });
 
     manageLearnedSajaseongeoBtn.addEventListener('click', () => {
@@ -271,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showScreen(gameScreen);
             quizGame.style.display = 'block';
             matchingGame.style.display = 'none';
-            initializeQuiz('meaningReading'); // 퀴즈(뜻음) 초기화
+            initializeQuiz('meaningChinese'); // 퀴즈(뜻중국어) 초기화
         });
     }
 
@@ -320,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 기존 utterances 배열 초기화
         currentUtterances = [];
 
-        const koreanText = `${currentSajaseongeo.뜻}. ${currentSajaseongeo.음}`;
+        const koreanText = `${currentSajaseongeo.뜻}`;
         const chineseText = currentSajaseongeo.중국어;
 
         // 안드로이드 환경에서 TTS 지원 시
@@ -358,10 +357,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         let quizData = [];
-        if (selectedQuizType === 'meaningReading') {
-            quizData = sajaseongeoData.filter(item => item.뜻 && item.음);
+        if (selectedQuizType === 'meaningChinese') {
+            // 퀴즈(뜻중국어): 뜻과 중국어를 보여주고 사자성어를 맞추는 퀴즈
+            quizData = sajaseongeoData.filter(item => item.뜻 && item.중국어);
         } else if (selectedQuizType === 'sajaseongeo') {
-            quizData = sajaseongeoData.filter(item => item.뜻 && item.음);
+            // 퀴즈(사자성어): 사자성어를 보여주고 뜻과 중국어를 맞추는 퀴즈
+            quizData = sajaseongeoData.filter(item => item.뜻 && item.중국어);
         }
 
         const totalQuestions = Math.min(20, quizData.length);
@@ -397,9 +398,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const currentQuestion = quizQuestions.shift();
 
-        if (selectedQuizType === 'meaningReading') {
-            // 퀴즈(뜻음): 뜻과 음을 보여주고 사자성어를 맞추는 퀴즈
-            quizQuestion.innerHTML = `"<span style="color: #1e90ff; font-weight: bold;">${currentQuestion.뜻} (${currentQuestion.음})</span>"인 사자성어는?`;
+        if (selectedQuizType === 'meaningChinese') {
+            // 퀴즈(뜻중국어): 뜻과 중국어를 보여주고 사자성어를 맞추는 퀴즈
+            quizQuestion.innerHTML = `"<span style="color: #1e90ff; font-weight: bold;">${currentQuestion.뜻} (${currentQuestion.중국어})</span>"인 사자성어는?`;
 
             // 옵션 생성 (정답 포함 총 4개)
             let options = [currentQuestion.사자성어];
@@ -420,7 +421,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.addEventListener('click', () => {
                     if (option === currentQuestion.사자성어) {
                         quizFeedback.style.color = '#32cd32';
-                        quizFeedback.innerText = `정답입니다! ${currentQuestion.뜻} (${currentQuestion.음})`;
+                        quizFeedback.innerText = `정답입니다! ${currentQuestion.뜻} (${currentQuestion.중국어})`;
                         let currentScore = parseInt(currentScoreSpan.innerText);
                         currentScore += 10;
                         currentScoreSpan.innerText = currentScore.toString();
@@ -444,17 +445,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
         } else if (selectedQuizType === 'sajaseongeo') {
-            // 퀴즈(사자성어): 사자성어를 보여주고 뜻과 음을 맞추는 퀴즈
-            quizQuestion.innerHTML = `<span style="color: #1e90ff;"> "${currentQuestion.사자성어}"</span>의 뜻과 음은 무엇인가요?`;
+            // 퀴즈(사자성어): 사자성어를 보여주고 뜻과 중국어를 맞추는 퀴즈
+            quizQuestion.innerHTML = `<span style="color: #1e90ff;"> "${currentQuestion.사자성어}"</span>의 뜻과 중국어는 무엇인가요?`;
 
             // 정답 조합
-            let correctAnswer = `${currentQuestion.뜻} (${currentQuestion.음})`;
+            let correctAnswer = `${currentQuestion.뜻} (${currentQuestion.중국어})`;
 
             // 옵션 생성 (정답 포함 총 4개)
             let options = [correctAnswer];
             while (options.length < 4 && sajaseongeoData.length > options.length) {
                 const randomSajaseongeo = sajaseongeoData[Math.floor(Math.random() * sajaseongeoData.length)];
-                const randomAnswer = `${randomSajaseongeo.뜻} (${randomSajaseongeo.음})`;
+                const randomAnswer = `${randomSajaseongeo.뜻} (${randomSajaseongeo.중국어})`;
                 if (!options.includes(randomAnswer)) {
                     options.push(randomAnswer);
                 }
@@ -470,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.addEventListener('click', () => {
                     if (option === correctAnswer) {
                         quizFeedback.style.color = '#32cd32';
-                        quizFeedback.innerText = `정답입니다! ${currentQuestion.사자성어} (${currentQuestion.음})`;
+                        quizFeedback.innerText = `정답입니다! ${currentQuestion.사자성어} (${currentQuestion.중국어})`;
                         let currentScore = parseInt(currentScoreSpan.innerText);
                         currentScore += 10;
                         currentScoreSpan.innerText = currentScore.toString();
@@ -654,10 +655,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const learnedSajaseongeo = getLearnedSajaseongeo()[selectedLevel] || [];
         const availableIndices = shuffledIndices.filter(index => !learnedSajaseongeo.includes(sajaseongeoData[index].사자성어));
         if (availableIndices.length === 0) {
-            sajaseongeoCharacter.innerText = '모든 사자성어를 학습 완료했습니다!';
+            sajaseongeoChinese.innerText = '모든 사자성어를 학습 완료했습니다!';
+            sajaseongeoCharacter.innerText = '';
             sajaseongeoMeaning.innerText = '';
-            sajaseongeoReading.innerText = '';
-            sajaseongeoChinese.innerText = '';
             writingCanvas.getContext('2d').clearRect(0, 0, writingCanvas.width, writingCanvas.height);
             document.getElementById('stroke-order-svg').src = '';
             markCompletedCheckbox.checked = false;
@@ -670,10 +670,9 @@ document.addEventListener('DOMContentLoaded', () => {
             currentIndex = availableIndices.length - 1;
         }
         currentSajaseongeo = sajaseongeoData[availableIndices[currentIndex]];
+        sajaseongeoChinese.innerText = currentSajaseongeo.중국어;
         sajaseongeoCharacter.innerText = currentSajaseongeo.사자성어;
         sajaseongeoMeaning.innerText = currentSajaseongeo.뜻;
-        sajaseongeoReading.innerText = currentSajaseongeo.음;
-        sajaseongeoChinese.innerText = currentSajaseongeo.중국어;
 
         // 캔버스 초기화
         const ctxCanvas = writingCanvas.getContext('2d');
@@ -684,8 +683,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 동적 폰트 크기 설정
         const canvasWidth = writingCanvas.width;
         const canvasHeight = writingCanvas.height;
-        const sajaseongeoText = currentSajaseongeo.사자성어;
-        const maxFontSize = 150; // 최대 폰트 크기 (사자성어는 한자 4글자이므로 크기 조절)
+        const sajaseongeoText = currentSajaseongeo.중국어;
+        const maxFontSize = 150; // 최대 폰트 크기 (중국어는 일반적으로 크기 조절)
         const minFontSize = 30;  // 최소 폰트 크기
         let fontSize = maxFontSize;
 
@@ -905,5 +904,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // ---------------------------
+    // 18. 매칭 게임 함수
+    // ---------------------------
+
+    // (이미 위에서 정의되었으므로 중복 제거)
+
+    // ---------------------------
+    // 19. 사자성어 표시 함수 (학습하기 화면)
+    // ---------------------------
+
+    // (이미 displaySajaseongeo 함수에서 처리됨)
+
+    // ---------------------------
+    // 20. 초기화 및 최고 점수 UI 초기화
+    // ---------------------------
+
+    // 이미 initializeHighScoresUI 함수에서 처리됨
 
 });
