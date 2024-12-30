@@ -7,11 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------------------------
 
     // 화면 요소
-    const difficultyScreen = document.getElementById('difficulty-screen');
-    const mainMenuScreen = document.getElementById('main-menu-screen');
-    const studyScreen = document.getElementById('study-screen');
-    const gameScreen = document.getElementById('game-screen');
-    const manageLearnedSajaseongeoScreen = document.getElementById('manage-learned-sajaseongeo-screen');
+    const screens = {
+        difficulty: document.getElementById('difficulty-screen'),
+        mainMenu: document.getElementById('main-menu-screen'),
+        study: document.getElementById('study-screen'),
+        game: document.getElementById('game-screen'),
+        manageLearned: document.getElementById('manage-learned-sajaseongeo-screen')
+    };
 
     // 난이도 선택 버튼
     const difficultyButtons = document.querySelectorAll('.difficulty-btn');
@@ -208,10 +210,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 화면 전환 함수
     function showScreen(screen) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        // 모든 화면 비활성화
+        Object.values(screens).forEach(s => s.classList.remove('active'));
+        // 선택된 화면 활성화
         screen.classList.add('active');
-        if (screen === manageLearnedSajaseongeoScreen) {
+
+        // 화면 전환 시 필요한 초기화 작업 수행
+        if (screen === screens.manageLearned) {
             loadLearnedSajaseongeoManagement();
+        } else if (screen === screens.game) {
+            // 게임 화면으로 전환 시 TTS 중지
+            stopAllTTS();
+        } else if (screen === screens.study) {
+            // 학습 화면으로 전환 시 TTS 초기화
+            displaySajaseongeo();
         }
     }
 
@@ -230,47 +242,47 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             studyLevelSpan.innerText = levelName; // 학습하기 화면에 표시
             loadSajaseongeoData();
-            showScreen(mainMenuScreen);
+            showScreen(screens.mainMenu);
         });
     });
 
     // 메인 메뉴 버튼 클릭 이벤트
     studyBtn.addEventListener('click', () => {
-        showScreen(studyScreen);
+        showScreen(screens.study);
         initializeStudy(); // 학습하기 초기화
     });
 
     gameBtn.addEventListener('click', () => {
-        showScreen(gameScreen);
+        showScreen(screens.game);
         quizGame.style.display = 'block';
         matchingGame.style.display = 'none';
         initializeQuiz('meaningChinese'); // 퀴즈(뜻중국어) 초기화
     });
 
     manageLearnedSajaseongeoBtn.addEventListener('click', () => {
-        showScreen(manageLearnedSajaseongeoScreen);
+        showScreen(screens.manageLearned);
     });
 
     backToDifficultyBtn.addEventListener('click', () => {
-        showScreen(difficultyScreen);
+        showScreen(screens.difficulty);
     });
 
     backToMenuFromManagedBtn.addEventListener('click', () => {
-        showScreen(mainMenuScreen);
+        showScreen(screens.mainMenu);
     });
 
     backToMenuFromStudyBtn.addEventListener('click', () => { 
-        showScreen(mainMenuScreen);
+        showScreen(screens.mainMenu);
     });
 
     backToMenuFromGameBtn.addEventListener('click', () => {
-        showScreen(mainMenuScreen);
+        showScreen(screens.mainMenu);
     });
 
     // 퀴즈 유형 버튼 클릭 이벤트
     if (quizMeaningReadingBtn) {
         quizMeaningReadingBtn.addEventListener('click', () => {
-            showScreen(gameScreen);
+            showScreen(screens.game);
             quizGame.style.display = 'block';
             matchingGame.style.display = 'none';
             initializeQuiz('meaningChinese'); // 퀴즈(뜻중국어) 초기화
@@ -279,16 +291,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (quizSajaseongeoBtn) {
         quizSajaseongeoBtn.addEventListener('click', () => {
-            showScreen(gameScreen);
+            showScreen(screens.game);
             quizGame.style.display = 'block';
             matchingGame.style.display = 'none';
             initializeQuiz('sajaseongeo'); // 퀴즈(사자성어) 초기화
         });
     }
 
-    matchingGameBtn.addEventListener('click', () => {
-        startMatchingGame();
-    });
+    if (matchingGameBtn) {
+        matchingGameBtn.addEventListener('click', () => {
+            showScreen(screens.game);
+            quizGame.style.display = 'none';
+            matchingGame.style.display = 'block';
+            initializeMatchingGame();
+        });
+    }
 
     // ---------------------------
     // 5. 학습하기 초기화 함수
@@ -362,6 +379,14 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
             console.warn("이 브라우저는 음성 합성을 지원하지 않습니다.");
         }
+    }
+
+    // 모든 TTS 중지 함수
+    function stopAllTTS() {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        currentUtterances = [];
     }
 
     // ---------------------------
@@ -553,7 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------------------------
 
     function startMatchingGame() {
-        showScreen(gameScreen);
+        showScreen(screens.game);
         quizGame.style.display = 'none';
         matchingGame.style.display = 'block';
         initializeMatchingGame();
@@ -680,10 +705,14 @@ document.addEventListener('DOMContentLoaded', () => {
             sajaseongeoCharacter.innerText = '';
             sajaseongeoMeaning.innerText = '';
             writingCanvas.getContext('2d').clearRect(0, 0, writingCanvas.width, writingCanvas.height);
-            // 스피커 아이콘은 기존 'speak-btn'을 활용
+            // "유래" 정보 비우기
+            sajaseongeoOrigin.innerText = '';
+            // 스피커 버튼 비활성화
+            speakBtn.disabled = true;
+            speakBtnOverlay.disabled = true;
+            // 학습완료 체크박스 비활성화
             markCompletedCheckbox.checked = false;
             markCompletedCheckbox.disabled = true;
-            sajaseongeoOrigin.innerText = '';
             currentSajaseongeo = null;
             return;
         }
@@ -741,6 +770,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             sajaseongeoOrigin.innerText = '';
         }
+
+        // 스피커 버튼 활성화
+        speakBtn.disabled = false;
+        speakBtnOverlay.disabled = false;
     }
 
     // ---------------------------
