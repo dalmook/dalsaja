@@ -130,7 +130,6 @@ button:hover {
     flex-direction: column; /* 세로 방향으로 배치 */
 }
 #speak-btn {
-    margin-left: auto;
     font-size: 24px;
     padding: 5px 10px;
     cursor: pointer;
