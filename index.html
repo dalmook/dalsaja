@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>사자성어 학습</title>
+    <!-- Google Fonts Import -->
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <!-- Custom Font Definition -->
     <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome CDN (선택 사항) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 <body>
@@ -15,20 +21,19 @@
             <button class="difficulty-btn" data-level="초급">초급</button>
             <button class="difficulty-btn" data-level="중급">중급</button>
             <button class="difficulty-btn" data-level="고급">고급</button>
-            <div class="adsense-container">
-                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9168248935486215"
-                 crossorigin="anonymous"></script>
-               <!-- 광고 슬롯 -->
-               <ins class="adsbygoogle"
+        </div>
+        <div class="adsense-container">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9168248935486215" crossorigin="anonymous"></script>
+            <!-- 광고 슬롯 -->
+            <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-9168248935486215"
                  data-ad-slot="8180193210"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-               <script>
+            <script>
                  (adsbygoogle = window.adsbygoogle || []).push({});
-               </script>
-            </div>
+            </script>
         </div>
     </div>
 
@@ -42,8 +47,7 @@
         </div>
         <button id="back-to-difficulty">뒤로</button>
         <div class="adsense-container2">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9168248935486215"
-                 crossorigin="anonymous"></script>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9168248935486215" crossorigin="anonymous"></script>
             <!-- 광고 슬롯 -->
             <ins class="adsbygoogle"
                  style="display:inline-block;width:728px;height:100px"
@@ -64,43 +68,53 @@
         <button id="back-to-menu-from-managed">뒤로</button>
     </div>
 
-<!-- 학습하기 화면 -->
-<div id="study-screen" class="screen">
-    <h1>학습하기 - <span id="study-level"></span></h1>
-    <div class="order-options">
-        <label>
-            <input type="radio" name="order" value="sequential" checked> 순차
-        </label>
-        <label>
-            <input type="radio" name="order" value="random"> 랜덤
-        </label>
-        <button id="back-to-menu-from-study">뒤로</button>
-    </div>
-    <div id="sajaseongeo-display" style="position: relative;">
-        <div class="sajaseongeo-info">
-            <span id="sajaseongeo-chinese"></span>
-            <button id="speak-btn">🔊</button>
-            <span id="sajaseongeo-character"></span>
-        </div>
-        <div class="sajaseongeo-details">
-            <p><span id="sajaseongeo-meaning"></span></p>
-        </div>
-        <canvas id="writing-canvas" width="300" height="300"></canvas>
-        <button id="clear-canvas-btn" class="action-btn">쓰기 초기화</button>
-        <button id="go-first-btn" class="action-btn">처음</button>
-
-        <!-- 학습완료 체크박스 추가 -->
-        <div class="completion-checkbox">
+    <!-- 학습하기 화면 -->
+    <div id="study-screen" class="screen">
+        <h1>학습하기 - <span id="study-level"></span></h1>
+        <div class="order-options">
             <label>
-                <input type="checkbox" id="mark-completed"> 학습 완료
+                <input type="radio" name="order" value="sequential" checked> 순차
             </label>
+            <label>
+                <input type="radio" name="order" value="random"> 랜덤
+            </label>
+            <button id="back-to-menu-from-study">뒤로</button>
+        </div>
+        <div id="sajaseongeo-display">
+            <div class="sajaseongeo-info">
+                <span id="sajaseongeo-chinese"></span>
+                <button id="speak-btn" class="speak-btn" title="음성 읽기" aria-label="음성 읽기">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <span id="sajaseongeo-character"></span>
+            </div>
+            <div class="sajaseongeo-details">
+                <p><span id="sajaseongeo-meaning"></span></p>
+            </div>
+            <!-- 캔버스와 스피커 버튼을 감싸는 컨테이너 -->
+            <div class="canvas-container">
+                <canvas id="writing-canvas" width="300" height="300"></canvas>
+                <button id="speak-btn-overlay" class="speak-btn-overlay" title="음성 읽기" aria-label="음성 읽기">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <!-- 유래를 타이핑 효과로 나타내는 컨테이너 추가 -->
+            <div id="sajaseongeo-origin" class="sajaseongeo-origin"></div>
+            <button id="clear-canvas-btn" class="action-btn">쓰기 초기화</button>
+            <button id="go-first-btn" class="action-btn">처음</button>
+
+            <!-- 학습완료 체크박스 추가 -->
+            <div class="completion-checkbox">
+                <label>
+                    <input type="checkbox" id="mark-completed"> 학습 완료
+                </label>
+            </div>
+        </div>
+        <div class="navigation-buttons">
+            <button id="prev-btn">이전</button>
+            <button id="next-btn">다음</button>
         </div>
     </div>
-    <div class="navigation-buttons">
-        <button id="prev-btn">이전</button>
-        <button id="next-btn">다음</button>
-    </div>
-</div>
 
     <!-- 낱말게임 화면 -->
     <div id="game-screen" class="screen">
