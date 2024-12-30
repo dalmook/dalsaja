@@ -790,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 유래 표시 및 타이핑 효과
         if (currentSajaseongeo.유래) {
             typeText(sajaseongeoOrigin, currentSajaseongeo.유래, 50, () => {
-                readAloud(currentSajaseongeo.유래);
+                //readAloud(currentSajaseongeo.유래);
             });
         } else {
             sajaseongeoOrigin.innerText = '';
