@@ -3,22 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>사자성어 학습</title>
+    <title>한자 학습 앱</title>
+    <!-- Font Awesome CDN 링크 추가 (선택 사항) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
 <body>
     <!-- 난이도 선택 화면 -->
     <div id="difficulty-screen" class="screen active">
-        <h1>급수를 선택하세요</h1>
+        <h1>한자 급수를 선택하세요</h1>
         <div class="buttons">
-            <button class="difficulty-btn" data-level="초급">초급</button>
-            <button class="difficulty-btn" data-level="중급">중급</button>
-            <button class="difficulty-btn" data-level="고급">고급</button>
+            <button class="difficulty-btn" data-level="8">8급</button>
+            <button class="difficulty-btn" data-level="7">7급</button>
+            <button class="difficulty-btn" data-level="6">6급</button>
+            <button class="difficulty-btn" data-level="5">5급</button>
+            <button class="difficulty-btn" data-level="4">4급</button>
+            <button class="difficulty-btn" data-level="3">3급</button>
+            <button class="difficulty-btn" data-level="2">2급</button>
+            <button class="difficulty-btn" data-level="1">1급</button>
             <div class="adsense-container">
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9168248935486215"
                  crossorigin="anonymous"></script>
-               <!-- 광고 슬롯 -->
+               <!-- 달봉1 -->
                <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-9168248935486215"
@@ -32,19 +39,20 @@
         </div>
     </div>
 
+
     <!-- 메인 메뉴 화면 -->
     <div id="main-menu-screen" class="screen">
-        <h1 id="selected-level-title">난이도: </h1>
+        <h1 id="selected-level-title">급수: </h1>
         <div class="buttons">
             <button id="study-btn">학습하기</button>
             <button id="game-btn">낱말게임</button>
-            <button id="manage-learned-sajaseongeo-btn">완료 사자성어 관리</button>
+            <button id="manage-learned-hanja-btn">완료 한자관리</button> <!-- 추가된 부분 -->
         </div>
         <button id="back-to-difficulty">뒤로</button>
         <div class="adsense-container2">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9168248935486215"
                  crossorigin="anonymous"></script>
-            <!-- 광고 슬롯 -->
+            <!-- 빙고게임 -->
             <ins class="adsbygoogle"
                  style="display:inline-block;width:728px;height:100px"
                  data-ad-client="ca-pub-9168248935486215"
@@ -54,60 +62,68 @@
             </script>
         </div>
     </div>
-
-    <!-- 완료 사자성어 관리 화면 -->
-    <div id="manage-learned-sajaseongeo-screen" class="screen">
-        <h2>학습완료 사자성어 관리</h2>
-        <div id="learned-sajaseongeo-list">
-            <!-- 학습완료 사자성어가 여기에 동적으로 추가됩니다 -->
+    <!-- 완료 한자관리 화면 -->
+    <div id="manage-learned-hanja-screen" class="screen">
+        <h2>학습완료 한자 관리</h2>
+        <div id="learned-hanja-list">
+            <!-- 학습완료 한자가 여기에 동적으로 추가됩니다 -->
         </div>
-        <button id="back-to-menu-from-managed">뒤로</button>
+        <button id="back-to-menu-from-managed">뒤로</button> <!-- 추가된 부분 -->
     </div>
-
-<!-- 학습하기 화면 -->
-<div id="study-screen" class="screen">
-    <h1>학습하기 - <span id="study-level"></span></h1>
-    <div class="order-options">
-        <label>
-            <input type="radio" name="order" value="sequential" checked> 순차
-        </label>
-        <label>
-            <input type="radio" name="order" value="random"> 랜덤
-        </label>
-        <button id="back-to-menu-from-study">뒤로</button>
-    </div>
-    <div id="sajaseongeo-display" style="position: relative;">
-        <div class="sajaseongeo-info">
-            <span id="sajaseongeo-chinese"></span>
-            <button id="speak-btn">🔊</button>
-            <span id="sajaseongeo-character"></span>
-        </div>
-        <div class="sajaseongeo-details">
-            <p><span id="sajaseongeo-meaning"></span></p>
-        </div>
-        <canvas id="writing-canvas" width="300" height="300"></canvas>
-        <button id="clear-canvas-btn" class="action-btn">쓰기 초기화</button>
-        <button id="go-first-btn" class="action-btn">처음</button>
-
-        <!-- 학습완료 체크박스 추가 -->
-        <div class="completion-checkbox">
+    <!-- 학습하기 화면 -->
+    <div id="study-screen" class="screen">
+        <h1>학습하기 - <span id="study-level"></span>급</h1>
+        <div class="order-options">
             <label>
-                <input type="checkbox" id="mark-completed"> 학습 완료
+                <input type="radio" name="order" value="sequential" checked> 순차
             </label>
+            <label>
+                <input type="radio" name="order" value="random"> 랜덤
+            </label>
+            <button id="back-to-menu-from-study">뒤로</button>
+        </div>
+        <div id="hanja-display" class="hanja-display">
+            <div class="hanja-info">
+                <span id="hanja-character"></span>
+            </div>
+            <div class="hanja-details">
+                <p><span id="hanja-meaning"></span> (<span id="hanja-reading" class="reading"></span>) -<span id="hanja-chinese"></span> </p>
+            </div>
+            <!-- 쓰기 순서 SVG 이미지 추가 -->
+            <img id="stroke-order-svg" src="" alt="쓰기 순서" class="stroke-order-svg">            
+            <!-- 쓰기 순서 이미지를 숨깁니다 -->
+            <div class="stroke-order" style="display: none;">
+                <img id="stroke-order-img" src="" alt="쓰기 순서">
+            </div>
+            <!-- 캔버스와 스피커 버튼을 감싸는 컨테이너 추가 -->
+            <div class="canvas-container">
+                <canvas id="writing-canvas" width="300" height="300"></canvas>
+                <button id="speak-btn" class="speak-btn" title="음성 읽기">🔊</button>
+            </div>
+            <!-- 유래를 타이핑 효과로 나타내는 컨테이너 추가 -->
+            <div id="hanja-origin" class="hanja-origin"></div>
+            <button id="clear-canvas-btn" class="action-btn">쓰기 초기화</button>
+            <button id="go-first-btn" class="action-btn">처음</button>
+            
+            <!-- 학습완료 체크박스 추가 -->
+            <div class="completion-checkbox">
+                <label>
+                    <input type="checkbox" id="mark-completed"> 학습 완료
+                </label>
+            </div>
+        </div>
+        <div class="navigation-buttons">
+            <button id="prev-btn">이전</button>
+            <button id="next-btn">다음</button>
         </div>
     </div>
-    <div class="navigation-buttons">
-        <button id="prev-btn">이전</button>
-        <button id="next-btn">다음</button>
-    </div>
-</div>
 
     <!-- 낱말게임 화면 -->
     <div id="game-screen" class="screen">
         <h1>낱말게임</h1>
         <div class="game-options">
             <button id="quiz-meaning-reading-btn">퀴즈(뜻음)</button>
-            <button id="quiz-sajaseongeo-btn">퀴즈(사자성어)</button>
+            <button id="quiz-hanja-btn">퀴즈(한자)</button>
             <button id="matching-game-btn">매칭 게임</button>
         </div>
         <div id="quiz-game" class="game-content" style="display: none;">
