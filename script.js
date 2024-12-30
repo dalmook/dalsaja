@@ -254,37 +254,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 메인 메뉴 버튼 클릭 이벤트
-    studyBtn.addEventListener('click', () => {
-        showScreen(screens.study);
-        initializeStudy(); // 학습하기 초기화
-    });
+    if (studyBtn) {
+        studyBtn.addEventListener('click', () => {
+            showScreen(screens.study);
+            initializeStudy(); // 학습하기 초기화
+        });
+    }
 
-    gameBtn.addEventListener('click', () => {
-        showScreen(screens.game);
-        quizGame.style.display = 'block';
-        matchingGame.style.display = 'none';
-        initializeQuiz('meaningChinese'); // 퀴즈(뜻중국어) 초기화
-    });
+    if (gameBtn) {
+        gameBtn.addEventListener('click', () => {
+            showScreen(screens.game);
+            quizGame.style.display = 'block';
+            matchingGame.style.display = 'none';
+            initializeQuiz('meaningChinese'); // 퀴즈(뜻중국어) 초기화
+        });
+    }
 
-    manageLearnedSajaseongeoBtn.addEventListener('click', () => {
-        showScreen(screens.manageLearned);
-    });
+    if (manageLearnedSajaseongeoBtn) {
+        manageLearnedSajaseongeoBtn.addEventListener('click', () => {
+            showScreen(screens.manageLearned);
+        });
+    }
 
-    backToDifficultyBtn.addEventListener('click', () => {
-        showScreen(screens.difficulty);
-    });
+    if (backToDifficultyBtn) {
+        backToDifficultyBtn.addEventListener('click', () => {
+            showScreen(screens.difficulty);
+        });
+    }
 
-    backToMenuFromManagedBtn.addEventListener('click', () => {
-        showScreen(screens.mainMenu);
-    });
+    if (backToMenuFromManagedBtn) {
+        backToMenuFromManagedBtn.addEventListener('click', () => {
+            showScreen(screens.mainMenu);
+        });
+    }
 
-    backToMenuFromStudyBtn.addEventListener('click', () => { 
-        showScreen(screens.mainMenu);
-    });
+    if (backToMenuFromStudyBtn) {
+        backToMenuFromStudyBtn.addEventListener('click', () => { 
+            showScreen(screens.mainMenu);
+        });
+    }
 
-    backToMenuFromGameBtn.addEventListener('click', () => {
-        showScreen(screens.mainMenu);
-    });
+    if (backToMenuFromGameBtn) {
+        backToMenuFromGameBtn.addEventListener('click', () => {
+            showScreen(screens.mainMenu);
+        });
+    }
 
     // 퀴즈 유형 버튼 클릭 이벤트
     if (quizMeaningReadingBtn) {
@@ -554,9 +568,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 다음 퀴즈 로드 버튼 이벤트
-    nextQuizBtn.addEventListener('click', () => {
-        loadNextQuizQuestion();
-    });
+    if (nextQuizBtn) {
+        nextQuizBtn.addEventListener('click', () => {
+            loadNextQuizQuestion();
+        });
+    }
 
     // ---------------------------
     // 8. 사자성어 데이터 로드
