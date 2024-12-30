@@ -29,15 +29,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 학습하기 화면 요소
     const studyLevelSpan = document.getElementById('study-level');
-    const sajaseongeoCharacter = document.getElementById('sajaseongeo-character');
-    const sajaseongeoMeaning = document.getElementById('sajaseongeo-meaning');
     const sajaseongeoChinese = document.getElementById('sajaseongeo-chinese');
+    const sajaseongeoMeaning = document.getElementById('sajaseongeo-meaning');
     const speakBtn = document.getElementById('speak-btn');
-    // speakBtnOverlay는 삭제됨
-    // writingCanvas와 관련 버튼 삭제됨
-    // const writingCanvas = document.getElementById('writing-canvas'); // 삭제됨
-    // const clearCanvasBtn = document.getElementById('clear-canvas-btn'); // 삭제됨
-    const goFirstBtn = document.getElementById('go-first-btn');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const orderOptions = document.getElementsByName('order');
@@ -49,17 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 낱말게임 화면 요소
     const quizMeaningReadingBtn = document.getElementById('quiz-meaning-reading-btn');
     const quizSajaseongeoBtn = document.getElementById('quiz-sajaseongeo-btn');
-    const matchingGameBtn = document.getElementById('matching-game-btn');
     const quizGame = document.getElementById('quiz-game');
-    const matchingGame = document.getElementById('matching-game');
     const quizQuestion = document.getElementById('quiz-question');
     const quizOptions = document.getElementById('quiz-options');
     const quizFeedback = document.getElementById('quiz-feedback');
     const nextQuizBtn = document.getElementById('next-quiz-btn');
-    const matchingGameBoard = document.getElementById('matching-game-board');
-    const matchingFeedback = document.getElementById('matching-feedback');
-    const restartMatchingBtn = document.getElementById('restart-matching-btn');
-    const backToMenuFromGameBtn = document.getElementById('back-to-menu-from-game');
 
     const currentScoreSpan = document.getElementById('current-score');
     const highScoreSpan = document.getElementById('high-score');
@@ -69,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 퀴즈 유형 버튼 요소
     const backToMenuFromStudyBtn = document.getElementById('back-to-menu-from-study');
+
+    // 게임 화면의 "뒤로" 버튼
+    const backToMenuFromGameBtn = document.getElementById('back-to-menu-from-game');
 
     // ---------------------------
     // 2. 전역 변수 선언
@@ -81,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     let isRandom = false;
     let shuffledIndices = [];
-    let isProcessing = false; // 매칭 게임 처리 중 여부
     let currentUtterances = [];
     let currentSajaseongeo = null; // 현재 사자성어
 
@@ -266,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
         gameBtn.addEventListener('click', () => {
             showScreen(screens.game);
             quizGame.style.display = 'block';
-            matchingGame.style.display = 'none';
             initializeQuiz('meaningChinese'); // 퀴즈(뜻중국어) 초기화
         });
     }
@@ -306,7 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
         quizMeaningReadingBtn.addEventListener('click', () => {
             showScreen(screens.game);
             quizGame.style.display = 'block';
-            matchingGame.style.display = 'none';
             initializeQuiz('meaningChinese'); // 퀴즈(뜻중국어) 초기화
         });
     }
@@ -315,17 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quizSajaseongeoBtn.addEventListener('click', () => {
             showScreen(screens.game);
             quizGame.style.display = 'block';
-            matchingGame.style.display = 'none';
             initializeQuiz('sajaseongeo'); // 퀴즈(사자성어) 초기화
-        });
-    }
-
-    if (matchingGameBtn) {
-        matchingGameBtn.addEventListener('click', () => {
-            showScreen(screens.game);
-            quizGame.style.display = 'none';
-            matchingGame.style.display = 'block';
-            initializeMatchingGame();
         });
     }
 
@@ -343,6 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             shuffledIndices = [...Array(sajaseongeoData.length).keys()];
         }
+        console.log(`Shuffled Indices: ${shuffledIndices}`); // 디버깅용 로그
         displaySajaseongeo();
     }
 
@@ -429,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const totalQuestions = Math.min(20, quizData.length);
-        quizQuestions = shuffleArray([...Array(sajaseongeoData.length).keys()])
+        quizQuestions = shuffleArray([...Array(quizData.length).keys()])
                             .slice(0, totalQuestions)
                             .map(index => quizData[index]);
         currentScoreSpan.innerText = '0';
@@ -483,13 +462,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('quiz-option-btn');
                 btn.addEventListener('click', () => {
                     if (option === currentQuestion.사자성어) {
-                        quizFeedback.style.color = '#32cd32';
+                        quizFeedback.classList.add('correct');
                         quizFeedback.innerText = `정답입니다! ${currentQuestion.뜻} (${currentQuestion.중국어})`;
                         let currentScore = parseInt(currentScoreSpan.innerText);
                         currentScore += 10;
                         currentScoreSpan.innerText = currentScore.toString();
                     } else {
-                        quizFeedback.style.color = '#ff0000';
+                        quizFeedback.classList.remove('correct');
                         quizFeedback.innerText = '오답입니다.';
                         let currentScore = parseInt(currentScoreSpan.innerText);
                         currentScore -= 5;
@@ -533,13 +512,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.add('quiz-option-btn');
                 btn.addEventListener('click', () => {
                     if (option === correctAnswer) {
-                        quizFeedback.style.color = '#32cd32';
+                        quizFeedback.classList.add('correct');
                         quizFeedback.innerText = `정답입니다! ${currentQuestion.사자성어} (${currentQuestion.중국어})`;
                         let currentScore = parseInt(currentScoreSpan.innerText);
                         currentScore += 10;
                         currentScoreSpan.innerText = currentScore.toString();
                     } else {
-                        quizFeedback.style.color = '#ff0000';
+                        quizFeedback.classList.remove('correct');
                         quizFeedback.innerText = '오답입니다.';
                         let currentScore = parseInt(currentScoreSpan.innerText);
                         currentScore -= 5;
@@ -560,6 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Reset quizFeedback and hide nextQuizBtn
         quizFeedback.innerText = '';
+        quizFeedback.classList.remove('correct');
         nextQuizBtn.style.display = 'none';
     }
 
@@ -571,7 +551,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---------------------------
-    // 8. 사자성어 데이터 로드
+    // 6. "학습 완료" 체크박스 기능 개선
+    // ---------------------------
+
+    markCompletedCheckbox.addEventListener('change', () => {
+        if (markCompletedCheckbox.checked && currentSajaseongeo) {
+            console.log(`학습 완료: ${currentSajaseongeo.사자성어}`);
+            markSajaseongeoAsLearned(currentSajaseongeo.사자성어);
+            // 다음 사자성어로 이동
+            moveToNextSajaseongeo();
+        }
+    });
+
+    function moveToNextSajaseongeo() {
+        // 현재 인덱스 저장
+        saveProgress(selectedLevel, currentIndex);
+        // 다음 인덱스로 이동
+        if (currentIndex < shuffledIndices.length - 1) {
+            currentIndex++;
+            displaySajaseongeo();
+            // 체크박스 초기화
+            markCompletedCheckbox.checked = false;
+        } else {
+            alert('마지막 사자성어입니다.');
+            markCompletedCheckbox.checked = false;
+        }
+    }
+
+    // ---------------------------
+    // 7. 사자성어 데이터 로드
     // ---------------------------
 
     function loadSajaseongeoData() {
@@ -593,143 +601,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---------------------------
-    // 9. 낱말게임 시작 함수
-    // ---------------------------
-
-    function startMatchingGame() {
-        showScreen(screens.game);
-        quizGame.style.display = 'none';
-        matchingGame.style.display = 'block';
-        initializeMatchingGame();
-    }
-
-    // ---------------------------
-    // 10. 매칭 게임 함수
-    // ---------------------------
-
-    // 매칭 게임 데이터 준비
-    let matchingPairsData = [];
-    let selectedItems = [];
-    let matchedCount = 0;
-
-    function initializeMatchingGame() {
-        matchingGameBoard.innerHTML = '';
-        matchingFeedback.innerText = '';
-        matchedCount = 0;
-        isProcessing = false;
-
-        // 준비할 매칭 쌍을 선택 (최대 8쌍)
-        const pairCount = Math.min(8, sajaseongeoData.length);
-        matchingPairsData = shuffleArray([...Array(sajaseongeoData.length).keys()]).slice(0, pairCount).map(index => sajaseongeoData[index]);
-
-        // 사자성어와 뜻을 섞어서 배치
-        let items = [];
-        matchingPairsData.forEach(pair => {
-            items.push({ type: 'sajaseongeo', text: pair.사자성어 });
-            items.push({ type: 'meaning', text: pair.뜻 });
-        });
-        items = shuffleArray(items);
-
-        // 카드 생성
-        items.forEach((item, idx) => {
-            const div = document.createElement('div');
-            div.classList.add('match-item');
-            div.dataset.type = item.type;
-            div.dataset.text = item.text;
-            div.innerText = item.text;
-            div.addEventListener('click', handleMatchingClick);
-            matchingGameBoard.appendChild(div);
-        });
-
-        selectedItems = [];
-    }
-
-    function handleMatchingClick(e) {
-        const clickedItem = e.currentTarget;
-
-        if (isProcessing || clickedItem.classList.contains('matched')) {
-            return;
-        }
-
-        const alreadySelectedIndex = selectedItems.indexOf(clickedItem);
-        if (alreadySelectedIndex !== -1) {
-            // 이미 선택된 카드 클릭 시 해제
-            clickedItem.style.backgroundColor = '#add8e6';
-            selectedItems.splice(alreadySelectedIndex, 1);
-            return;
-        }
-
-        clickedItem.style.backgroundColor = '#90ee90';
-        selectedItems.push(clickedItem);
-
-        if (selectedItems.length === 2) {
-            isProcessing = true;
-            setTimeout(checkMatching, 500);
-        }
-    }
-
-    function checkMatching() {
-        const [item1, item2] = selectedItems;
-
-        if (
-            (item1.dataset.type === 'sajaseongeo' && item2.dataset.type === 'meaning' && isMatchingPair(item1.dataset.text, item2.dataset.text)) ||
-            (item1.dataset.type === 'meaning' && item2.dataset.type === 'sajaseongeo' && isMatchingPair(item2.dataset.text, item1.dataset.text))
-        ) {
-            // 매칭 성공
-            item1.classList.add('matched');
-            item2.classList.add('matched');
-            matchingFeedback.style.color = '#32cd32';
-            matchingFeedback.innerText = '매칭 성공!';
-            matchedCount += 1;
-
-            // 매칭 성공한 사자성어 학습 완료로 표시
-            const sajaseongeo = item1.dataset.type === 'sajaseongeo' ? item1.dataset.text : item2.dataset.text;
-            markSajaseongeoAsLearned(sajaseongeo);
-
-        } else {
-            // 매칭 실패
-            item1.style.backgroundColor = '#add8e6';
-            item2.style.backgroundColor = '#add8e6';
-            matchingFeedback.style.color = '#ff0000';
-            matchingFeedback.innerText = '매칭 실패!';
-        }
-        selectedItems = [];
-        isProcessing = false;
-
-        if (matchedCount === matchingPairsData.length) {
-            matchingFeedback.innerText += ' 모든 매칭을 완료했습니다!';
-        }
-    }
-
-    function isMatchingPair(sajaseongeo, meaning) {
-        return sajaseongeoData.some(item => item.사자성어 === sajaseongeo && item.뜻 === meaning);
-    }
-
-    if (restartMatchingBtn) {
-        restartMatchingBtn.addEventListener('click', () => {
-            initializeMatchingGame();
-        });
-    }
-
-    // ---------------------------
-    // 11. 사자성어 표시 함수 (학습하기 화면)
+    // 8. 사자성어 표시 함수 (학습하기 화면)
     // ---------------------------
 
     function displaySajaseongeo() {
         if (sajaseongeoData.length === 0) return;
         const learnedSajaseongeo = getLearnedSajaseongeo()[selectedLevel] || [];
         const availableIndices = shuffledIndices.filter(index => !learnedSajaseongeo.includes(sajaseongeoData[index].사자성어));
+        
+        // 콘솔 로그 (디버깅용)
+        console.log(`Available Indices: ${availableIndices}`);
+        console.log(`Current Index: ${currentIndex}`);
+        console.log(`Total Available: ${availableIndices.length}`);
+
         if (availableIndices.length === 0) {
             sajaseongeoChinese.innerText = '모든 사자성어를 학습 완료했습니다!';
-            sajaseongeoCharacter.innerText = '';
             sajaseongeoMeaning.innerText = '';
-            // 캔버스 관련 코드 제거됨
-            // writingCanvas.getContext('2d').clearRect(0, 0, writingCanvas.width, writingCanvas.height); // 삭제됨
             // "유래" 정보 비우기
             sajaseongeoOrigin.innerText = '';
             // 스피커 버튼 비활성화
             speakBtn.disabled = true;
-            // speakBtnOverlay.disabled = true; // 삭제됨
             // 학습완료 체크박스 비활성화
             markCompletedCheckbox.checked = false;
             markCompletedCheckbox.disabled = true;
@@ -738,21 +629,28 @@ document.addEventListener('DOMContentLoaded', () => {
             clearTyping();
             return;
         }
+        
         // 현재 인덱스가 범위를 벗어나지 않도록 조정
         if (currentIndex >= availableIndices.length) {
             currentIndex = availableIndices.length - 1;
         }
+        
         currentSajaseongeo = sajaseongeoData[availableIndices[currentIndex]];
         sajaseongeoChinese.innerText = currentSajaseongeo.중국어;
-        sajaseongeoCharacter.innerText = currentSajaseongeo.사자성어;
         sajaseongeoMeaning.innerText = currentSajaseongeo.뜻;
 
-        // 캔버스 초기화 제거됨
-        // const ctxCanvas = writingCanvas.getContext('2d');
-        // ctxCanvas.clearRect(0, 0, writingCanvas.width, writingCanvas.height);
+        // 주석 표시 영역 초기화
+        const annotationsDiv = document.getElementById('sajaseongeo-annotations');
+        annotationsDiv.innerHTML = ''; // 기존 내용 삭제
 
-        // 사자성어 가이드 그리기 제거됨
-        // 사자성어 가이드 그리기 관련 코드 삭제됨
+        if (currentSajaseongeo.annotations && currentSajaseongeo.annotations.length > 0) {
+            currentSajaseongeo.annotations.forEach(annotation => {
+                const span = document.createElement('span');
+                span.classList.add('annotation');
+                span.innerHTML = `${annotation.meaning} (${annotation.character}) `;
+                annotationsDiv.appendChild(span);
+            });
+        }
 
         // 학습완료 체크박스 상태 설정
         markCompletedCheckbox.disabled = false;
@@ -761,18 +659,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // 유래 표시 및 타이핑 효과
         if (currentSajaseongeo.유래) {
             typeText(sajaseongeoOrigin, currentSajaseongeo.유래, 50);
-            // readAloud(currentSajaseongeo.유래); // 삭제됨
         } else {
             sajaseongeoOrigin.innerText = '';
         }
 
         // 스피커 버튼 활성화
         speakBtn.disabled = false;
-        // speakBtnOverlay.disabled = true; // 삭제됨
     }
 
     // ---------------------------
-    // 12. Cordova deviceready 이벤트 핸들링
+    // 9. Cordova deviceready 이벤트 핸들링
     // ---------------------------
 
     document.addEventListener('deviceready', () => {
@@ -781,13 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, false);
 
     // ---------------------------
-    // 13. 낱말게임 기능 구현
-    // ---------------------------
-
-    // (퀴즈 및 매칭 게임은 이미 위에서 구현됨)
-
-    // ---------------------------
-    // 14. 학습하기 초기화 및 진도 관리
+    // 10. 학습하기 초기화 및 진도 관리
     // ---------------------------
 
     // 학습 진도 저장
@@ -806,14 +696,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---------------------------
-    // 15. 초기화 및 최고 점수 UI 초기화
+    // 11. 초기화 및 최고 점수 UI 초기화
     // ---------------------------
 
     // 초기화 및 최고 점수 UI 초기화
     initializeHighScoresUI();
 
     // ---------------------------
-    // 16. TextToSpeech 기능 구현
+    // 12. TextToSpeech 기능 구현
     // ---------------------------
 
     function readAloud(text) {
@@ -854,16 +744,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // speakBtnOverlay는 삭제됨
-
     // ---------------------------
-    // 17. 캔버스 쓰기 기능 구현
+    // 13. "이전"과 "다음" 버튼 이벤트 핸들러 추가
     // ---------------------------
 
-    // 캔버스 관련 모든 코드 삭제됨
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            console.log('이전 버튼 클릭됨'); // 디버깅용 로그
+            if (currentIndex > 0) {
+                currentIndex--;
+                displaySajaseongeo();
+                saveProgress(selectedLevel, currentIndex);
+            } else {
+                alert('처음 사자성어입니다.');
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            console.log('다음 버튼 클릭됨'); // 디버깅용 로그
+            if (currentIndex < shuffledIndices.length - 1) {
+                currentIndex++;
+                displaySajaseongeo();
+                saveProgress(selectedLevel, currentIndex);
+            } else {
+                alert('마지막 사자성어입니다.');
+            }
+        });
+    }
 
     // ---------------------------
-    // 18. 타이핑 인터벌 중지 함수
+    // 14. clearTyping 함수 정의
     // ---------------------------
 
     function clearTyping() {

@@ -45,7 +45,7 @@
             <button id="game-btn">낱말게임</button>
             <button id="manage-learned-sajaseongeo-btn">완료 사자성어 관리</button>
         </div>
-        <button id="back-to-difficulty">뒤로</button>
+        <button id="back-to-difficulty" class="back-btn">뒤로</button>
         <div class="adsense-container2">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9168248935486215" crossorigin="anonymous"></script>
             <!-- 광고 슬롯 -->
@@ -65,7 +65,7 @@
         <div id="learned-sajaseongeo-list">
             <!-- 학습완료 사자성어가 여기에 동적으로 추가됩니다 -->
         </div>
-        <button id="back-to-menu-from-managed">뒤로</button>
+        <button id="back-to-menu-from-managed" class="back-btn">뒤로</button>
     </div>
 
     <!-- 학습하기 화면 -->
@@ -78,24 +78,27 @@
             <label>
                 <input type="radio" name="order" value="random"> 랜덤
             </label>
-            <button id="back-to-menu-from-study">뒤로</button>
+            <button id="back-to-menu-from-study" class="back-btn">뒤로</button>
         </div>
         <div id="sajaseongeo-display">
             <div class="sajaseongeo-info">
-                <span id="sajaseongeo-chinese"></span>
+                <span id="sajaseongeo-chinese">四必歸正</span>
                 <button id="speak-btn" class="speak-btn" title="음성 읽기" aria-label="음성 읽기">
                     <i class="fas fa-volume-up"></i>
                 </button>
-                <span id="sajaseongeo-character"></span>
+            </div>
+            <!-- 주석 표시 영역 -->
+            <div id="sajaseongeo-annotations" class="sajaseongeo-annotations">
+                <span class="annotation">사: 반드시 (四)</span>
+                <span class="annotation">필: 반드시 (必)</span>
+                <span class="annotation">귀: 돌아갈 (歸)</span>
+                <span class="annotation">정: 바를 (正)</span>
             </div>
             <div class="sajaseongeo-details">
-                <p><span id="sajaseongeo-meaning"></span></p>
+                <p><span id="sajaseongeo-meaning">모든 일이 반드시 바르게 되돌아온다</span></p>
             </div>
-            <!-- 유래를 타이핑 효과로 나타내는 컨테이너 추가 -->
+            <!-- 유래를 타이핑 효과로 나타내는 컨테이너 -->
             <div id="sajaseongeo-origin" class="sajaseongeo-origin"></div>
-            <button id="clear-canvas-btn" class="action-btn">쓰기 초기화</button>
-            <button id="go-first-btn" class="action-btn">처음</button>
-
             <!-- 학습완료 체크박스 추가 -->
             <div class="completion-checkbox">
                 <label>
@@ -113,9 +116,10 @@
     <div id="game-screen" class="screen">
         <h1>낱말게임</h1>
         <div class="game-options">
-            <button id="quiz-meaning-reading-btn">퀴즈(뜻음)</button>
-            <button id="quiz-sajaseongeo-btn">퀴즈(사자성어)</button>
-            <button id="matching-game-btn">매칭 게임</button>
+            <button id="quiz-meaning-reading-btn" class="quiz-type-btn">퀴즈(뜻음)</button>
+            <button id="quiz-sajaseongeo-btn" class="quiz-type-btn">퀴즈(사자성어)</button>
+            <!-- 매칭 게임 버튼 제거 -->
+            <!-- <button id="matching-game-btn">매칭 게임</button> -->
         </div>
         <div id="quiz-game" class="game-content" style="display: none;">
             <h2>퀴즈 게임</h2>
@@ -128,13 +132,16 @@
             <div id="quiz-feedback"></div>
             <button id="next-quiz-btn" class="action-btn" style="display: none;">다음 문제</button>
         </div>
+        <!-- 매칭 게임 관련 요소 제거 -->
+        <!--
         <div id="matching-game" class="game-content" style="display: none;">
             <h2>매칭 게임</h2>
             <div id="matching-game-board"></div>
             <div id="matching-feedback"></div>
             <button id="restart-matching-btn" class="action-btn">다시 시작</button>
         </div>
-        <button id="back-to-menu-from-game">뒤로</button>
+        -->
+        <button id="back-to-menu-from-game" class="back-btn">뒤로</button>
     </div>
 
     <script src="script.js"></script>

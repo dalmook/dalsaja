@@ -1,25 +1,25 @@
 /* style.css */
-
-/* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Gowun+Dodum&display=swap');
-
-/* Custom Font Definition */
 @font-face {
     font-family: 'hanchanzhengkaiti';
-    src: url('https://github.com/dalmook/dalhanja/blob/5d0ae8270b534bd99d42f76ad34f4550faa2f58d/hanchanzhengkaiti.ttf') format('truetype');
+    src: url('./hanchanzhengkaiti.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
-
-/* 기본 스타일 */
-body {
-    font-family: "hanchanzhengkaiti", sans-serif;
-    text-align: center;
-    background-color: #f0f8ff;
+/* 기본 리셋 */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    font-family: "hanchanzhengkaiti", sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 화면 전환을 위한 기본 스타일 */
 .screen {
     display: none;
     padding: 20px;
@@ -29,468 +29,561 @@ body {
     display: block;
 }
 
-h1, h2 {
-    color: #333;
+/* 공통 제목 스타일 */
+.screen h1, .screen h2 {
+    text-align: center;
     margin-bottom: 20px;
+    color: #2c3e50;
 }
 
-.buttons, .game-options {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+/* 난이도 선택 화면 */
+#difficulty-screen h1 {
+    font-size: 2em;
 }
 
-/* 완료 사자성어 관리 화면 스타일 */
-#manage-learned-sajaseongeo-screen {
-    display: none;
-    padding: 20px;
-}
-
-#manage-learned-sajaseongeo-screen.active {
+.buttons .difficulty-btn {
     display: block;
-}
-
-/* 버튼 스타일 */
-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-button:hover {
-    background-color: #add8e6;
-}
-
-.difficulty-btn {
-    background-color: #87cefa;
-    color: white;
-    flex: 1 1 30%;
-    margin: 5px;
-}
-
-#study-btn {
-    background-color: #32cd32;
-    color: white;
-}
-
-#game-btn {
-    background-color: #ff8c00;
-    color: white;
-}
-
-#manage-learned-sajaseongeo-btn {
-    background-color: #ff69b4;
-    color: white;
-}
-
-#back-to-difficulty,
-#back-to-menu-from-managed,
-#back-to-menu-from-study,
-#back-to-menu-from-game,
-#clear-canvas-btn,
-#next-quiz-btn,
-#restart-matching-btn,
-#go-first-btn {
-    background-color: #d3d3d3;
-    color: #333;
-    margin-top: 20px;
-    padding: 10px 20px;
-}
-
-.action-btn {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.order-options {
-    margin-bottom: 20px;
-}
-
-.order-options label {
-    margin: 0 10px;
-    font-size: 16px;
-}
-
-#sajaseongeo-display {
-    margin: 20px auto;
-    max-width: 400px;
-    position: relative;
-}
-
-/* Sajaseongeo Info Styling */
-.sajaseongeo-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-size: 28px;
-    margin-bottom: 10px;
-    flex-direction: column; /* 세로 방향으로 배치 */
-}
-
-/* Speak Button Styling */
-.speak-btn, .speak-btn-overlay {
-    background-color: rgba(30, 144, 255, 0.8); /* 반투명 파란색 배경 */
-    color: #ffffff;
-    border: none;
-    border-radius: 50%; /* 원형 버튼 */
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.speak-btn:hover, .speak-btn-overlay:hover {
-    background-color: rgba(30, 144, 255, 1); /* 호버 시 불투명 파란색으로 변경 */
-    transform: scale(1.1); /* 호버 시 버튼 약간 확대 */
-}
-
-.speak-btn i, .speak-btn-overlay i {
-    font-size: 20px;
-    color: inherit; /* 부모 버튼의 색상 상속 */
-}
-
-/* Sajaseongeo Text Styling */
-#sajaseongeo-chinese {
-    font-size: 30px;
-    color: #ff4500; /* 중국어 텍스트 색상 변경 */
-}
-
-#sajaseongeo-character {
-    font-size: 28px;
-    color: #1e90ff;
-}
-
-.sajaseongeo-details {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-/* "유래" 정보 스타일링 */
-.sajaseongeo-origin {
-    margin-top: 20px; /* 캔버스 아래 여백 */
-    font-size: 16px;
-    color: #333333;
-    min-height: 24px; /* 타이핑 효과를 위한 최소 높이 */
-    white-space: pre-wrap; /* 줄바꿈 유지 */
-    border-left: 3px solid #1e90ff; /* 왼쪽에 파란색 선 */
-    padding-left: 10px; /* 왼쪽 패딩 */
-    font-family: 'Gulim', sans-serif; /* 글꼴 설정 */
-}
-
-/* 읽기(음) 부분 애니메이션 */
-.reading {
-    animation: pulse 2s infinite;
-    font-weight: bold;
-}
-
-@keyframes pulse {
-    0% {
-        color: #000000;
-    }
-    50% {
-        color: #ff0000;
-    }
-    100% {
-        color: #000000;
-    }
-}
-
-.stroke-order {
-    display: none;
-}
-
-/* Writing Canvas Styling */
-.canvas-container {
-    position: relative; /* 내부 요소의 절대 위치를 기준으로 설정 */
-    display: inline-block; /* 캔버스와 버튼을 인라인 블록으로 배치 */
-    margin-bottom: 15px; /* 캔버스와 아래 요소 간 간격 */
-}
-
-#writing-canvas {
-    border: 2px solid #1e90ff;
-    border-radius: 10px;
-    background-color: #ffffff;
-    touch-action: none; /* 터치 이벤트 방지 */
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-}
-
-.completion-checkbox {
-    margin-top: 10px;
-}
-
-.completion-checkbox label {
-    font-size: 18px;
-    cursor: pointer;
-}
-
-.navigation-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 20px 0;
-}
-
-.navigation-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-}
-
-/* 추가된 버튼 스타일 */
-#go-first-btn {
-    margin-left: 10px; /* 버튼 간 간격 조정 */
-    background-color: #4CAF50; /* 배경색 변경 */
-    color: white; /* 글자색 변경 */
-}
-
-#go-first-btn:hover {
-    background-color: #45a049; /* 호버 시 배경색 변경 */
-}
-
-/* 게임 스타일 */
-.game-content {
-    margin-top: 20px;
-}
-
-.score-section {
-    margin-bottom: 15px;
-}
-
-.score-section p {
-    font-size: 18px;
-    margin: 5px 0;
-}
-
-#quiz-question {
-    font-weight: bold;
-    color: #1e90ff;
-    margin-bottom: 20px;
+    width: 250px;
+    margin: 15px auto;
+    padding: 15px;
     font-size: 1.2em;
-}
-
-/* quiz-option-btn 스타일 */
-.quiz-option-btn {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    font-size: 16px;
     cursor: pointer;
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.quiz-option-btn:hover {
-    background-color: #e0e0e0;
-}
-
-/* quiz-feedback 스타일 */
-#quiz-feedback {
-    margin-top: 15px;
-    font-size: 1em;
-}
-
-/* next-quiz-btn 스타일 */
-#next-quiz-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #1e90ff;
-    color: #ffffff;
+    background-color: #3498db;
+    color: #fff;
     border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-#next-quiz-btn:hover {
-    background-color: #0d6efd;
-}
-
-#quiz-options, #matching-game-board {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-#matching-feedback {
-    margin-top: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ff0000;
-}
-
-.match-item {
-    padding: 10px;
-    background-color: #add8e6;
-    border-radius: 5px;
-    cursor: pointer;
-    user-select: none;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.match-item:hover {
-    background-color: #90ee90;
+.buttons .difficulty-btn:hover {
+    background-color: #2980b9;
     transform: scale(1.05);
 }
 
-.match-item.matched {
-    background-color: #90ee90;
-    cursor: default;
+/* 메인 메뉴 화면 */
+#main-menu-screen h1 {
+    font-size: 2em;
 }
 
-/* 학습완료 사자성어 관리 섹션 스타일 */
-.learned-sajaseongeo-section {
-    margin-top: 40px;
+#main-menu-screen .buttons button {
+    display: block;
+    width: 220px;
+    margin: 10px auto;
+    padding: 15px;
+    font-size: 1.1em;
+    cursor: pointer;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-.learned-sajaseongeo-section h2 {
-    margin-bottom: 15px;
+#main-menu-screen .buttons button:hover {
+    background-color: #27ae60;
+    transform: scale(1.05);
 }
 
-.learned-sajaseongeo-list {
+/* 학습하기 화면 */
+#study-screen h1 {
+    font-size: 2em;
+}
+
+.order-options {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.order-options label {
+    margin: 0 15px;
+    font-size: 1em;
+    cursor: pointer;
+    color: #34495e;
+}
+
+.order-options input[type="radio"] {
+    margin-right: 5px;
+}
+
+.order-options .back-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.order-options .back-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+#sajaseongeo-display {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 2px solid #ecf0f1;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 사자성어 정보 */
+.sajaseongeo-info {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+#sajaseongeo-chinese {
+    font-size: 3em;
+    font-weight: bold;
+    margin-right: 15px;
+    color: #2980b9;
+}
+
+.speak-btn {
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: #2980b9;
+    transition: color 0.3s, transform 0.2s;
+}
+
+.speak-btn:hover {
+    color: #1abc9c;
+    transform: scale(1.2);
+}
+
+/* 주석 표시 영역 */
+.sajaseongeo-annotations {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.sajaseongeo-annotations .annotation {
+    background-color: #ecf0f1;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 0.95em;
+    color: #2c3e50;
+    border: 1px solid #bdc3c7;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.sajaseongeo-annotations .annotation:hover {
+    background-color: #dfe6e9;
+    transform: scale(1.05);
+}
+
+/* 뜻과 유래 구분 */
+.sajaseongeo-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.sajaseongeo-meaning, .sajaseongeo-origin {
+    width: 48%;
+    padding: 10px;
+    background-color: #f1c40f;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sajaseongeo-origin {
+    background-color: #8e44ad;
+    font-size: 1em;
+    color: #ecf0f1;
+}
+
+/* 유래 텍스트 스타일 */
+.sajaseongeo-origin {
+    font-style: italic;
+}
+
+/* 유래 타이핑 효과 컨테이너 */
+.sajaseongeo-origin {
+    min-height: 40px;
+}
+
+/* 네비게이션 버튼 */
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.navigation-buttons button {
+    padding: 12px 25px;
+    margin: 0 15px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #1abc9c;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.navigation-buttons button:hover {
+    background-color: #16a085;
+    transform: scale(1.05);
+}
+
+.completion-checkbox {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.completion-checkbox label {
+    font-size: 1em;
+    cursor: pointer;
+    color: #34495e;
+}
+
+.completion-checkbox input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+/* 퀴즈 화면 */
+#quiz-game h2 {
+    font-size: 1.8em;
+    color: #2c3e50;
+}
+
+.quiz-option-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #f39c12;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.quiz-option-btn:hover {
+    background-color: #e67e22;
+    transform: scale(1.05);
+}
+
+.quiz-feedback {
+    text-align: center;
+    font-size: 1.3em;
+    margin-top: 20px;
+    min-height: 30px;
+    color: #e74c3c;
+}
+
+.quiz-feedback.correct {
+    color: #2ecc71;
+}
+
+#next-quiz-btn {
+    display: none;
+    margin: 25px auto;
+    padding: 12px 30px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+    display: block;
+}
+
+#next-quiz-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* 완료 사자성어 관리 화면 */
+#manage-learned-sajaseongeo-screen h1 {
+    font-size: 2em;
 }
 
 .learned-sajaseongeo-item {
-    background-color: #f5f5f5;
-    padding: 8px 12px;
-    border-radius: 5px;
     display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    margin: 8px 0;
+    padding: 8px 12px;
+    background-color: #ecf0f1;
+    border-radius: 8px;
+}
+
+.learned-sajaseongeo-item input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
 }
 
 .learned-sajaseongeo-item label {
+    font-size: 1em;
     cursor: pointer;
-    font-size: 16px;
+    color: #2c3e50;
 }
 
-/* 광고 컨테이너 스타일 */
-.adsense-container, .adsense-container2 {
-    width: 100%;
-    max-width: 728px; /* 광고 최대 너비 설정 */
-    margin: 20px auto; /* 중앙 정렬 및 상하 마진 설정 */
-    box-sizing: border-box; /* 패딩과 보더 포함 */
-    padding: 10px; /* 내부 여백 설정 */
-    border: 1px solid #ccc; /* 경계선 설정 */
-    overflow: hidden; /* 내용이 넘칠 경우 숨김 처리 */
-    transition: max-height 0.3s ease; /* 부드러운 전환 효과 */
+/* 퀴즈와 매칭 게임 공통 피드백 */
+.quiz-feedback {
+    min-height: 30px;
 }
 
-/* stroke-order-svg 클래스 스타일링 (현재 사용하지 않음) */
-.stroke-order-svg {
-    position: absolute;
-    top: 10px;          /* 캔버스 상단으로부터의 거리 */
-    right: 10px;        /* 캔버스 우측으로부터의 거리 */
-    width: 80px;        /* SVG 이미지의 너비 */
-    height: 80px;       /* SVG 이미지의 높이 */
-    pointer-events: none; /* SVG 이미지가 캔버스 상호작용을 방해하지 않도록 설정 */
+/* 추가된 스타일: 퀴즈 유형 버튼 및 뒤로 버튼 */
+.quiz-type-btn {
+    background-color: #3498db; /* 파란색 배경 */
+    color: #fff; /* 흰색 글자 */
+    padding: 12px 25px;
+    margin: 10px;
+    font-size: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-/* 반응형 디자인 */
+.quiz-type-btn:hover {
+    background-color: #2980b9; /* 호버 시 더 진한 파란색 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
 
-/* 모바일 세로 */
-@media (max-width: 600px) {
-    .adsense-container, .adsense-container2 {
-        max-width: 100%; /* 모바일에서는 전체 너비 사용 */
-    }
-    .adsense-container2 {
-        max-height: 150px; /* 모바일에서의 최대 높이 설정 */
-        margin: 300px auto;
-        overflow-y: scroll; /* 세로 스크롤 추가 */
-    }
+.back-btn {
+    background-color: #e74c3c; /* 빨간색 배경 */
+    color: #fff; /* 흰색 글자 */
+    padding: 10px 20px;
+    margin: 20px auto 0;
+    display: block;
+    font-size: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 120px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.back-btn:hover {
+    background-color: #c0392b; /* 호버 시 더 진한 빨간색 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 추가적인 버튼 스타일 (옵션) */
+/* 예를 들어, "다음 문제" 버튼 */
+.action-btn {
+    background-color: #2ecc71; /* 초록색 배경 */
+    color: #fff; /* 흰색 글자 */
+    padding: 10px 20px;
+    margin-top: 15px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-btn:hover {
+    background-color: #27ae60; /* 호버 시 더 진한 초록색 */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 점수 표시 영역 스타일 */
+.score-section {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    color: #2c3e50;
+}
+
+/* 퀴즈 질문 및 옵션 스타일 */
+#quiz-question {
+    text-align: center;
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: #34495e;
+}
+
+#quiz-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#quiz-options button {
+    width: 80%;
+    max-width: 400px;
+}
+
+/* 퀴즈 피드백 스타일 */
+#quiz-feedback {
+    text-align: center;
+    font-size: 1.3em;
+    margin-top: 20px;
+    min-height: 30px;
+    color: #e74c3c;
+}
+
+#quiz-feedback.correct {
+    color: #2ecc71;
+}
+
+/* 학습 완료 체크박스 스타일 */
+.completion-checkbox {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.completion-checkbox label {
+    font-size: 1em;
+    cursor: pointer;
+    color: #34495e;
+}
+
+.completion-checkbox input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+/* 주석 표시 영역 스타일 */
+.sajaseongeo-annotations .annotation {
+    display: block;
+    margin: 5px 0;
+    font-size: 0.95em;
+    color: #7f8c8d;
+}
+
+/* 학습하기 화면 세부사항 스타일 */
+.sajaseongeo-details p {
+    font-size: 1.1em;
+    color: #2c3e50;
+}
+
+/* 반응형 디자인 강화 */
+@media (max-width: 1024px) {
     .sajaseongeo-info {
-        font-size: 36px;
+        flex-direction: column;
     }
 
-    #writing-canvas {
-        width: 250px;
-        height: 250px;
+    #sajaseongeo-chinese {
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
-    .buttons button, .game-options button {
-        flex: 1 1 45%;
+    .sajaseongeo-annotations {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .learned-sajaseongeo-item {
-        font-size: 14px;
+    .sajaseongeo-details {
+        flex-direction: column;
+        align-items: center;
     }
-    #matching-game-board {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
+
+    .sajaseongeo-meaning, .sajaseongeo-origin {
+        width: 90%;
+        margin-bottom: 15px;
+    }
+
+    .quiz-option-btn {
+        padding: 10px 18px;
+        margin: 8px;
+        font-size: 0.95em;
+    }
+
+    #next-quiz-btn {
+        padding: 10px 28px;
+        margin: 20px auto;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .sajaseongeo-info {
+        flex-direction: column;
+    }
+
+    #sajaseongeo-chinese {
+        font-size: 2.5em;
+    }
+
+    .sajaseongeo-annotations .annotation {
+        font-size: 0.9em;
+    }
+
+    .sajaseongeo-meaning, .sajaseongeo-origin {
         width: 100%;
-        max-height: 40vh;
-        overflow-y: auto;
     }
 
-    .match-item {
-        width: 40px;
-        height: 40px;
-        font-size: 14px;
-    }
-}
-
-/* 모바일 가로 및 태블릿 */
-@media (min-width: 601px) and (max-width: 1024px) {
-    .sajaseongeo-info {
-        font-size: 40px;
+    .quiz-option-btn {
+        padding: 8px 16px;
+        margin: 6px;
+        font-size: 0.9em;
     }
 
-    #writing-canvas {
-        width: 280px;
-        height: 280px;
-    }
-
-    .buttons button, .game-options button {
-        flex: 1 1 30%;
-    }
-
-    .learned-sajaseongeo-item {
-        font-size: 16px;
+    #next-quiz-btn {
+        padding: 8px 24px;
+        margin: 18px auto;
+        font-size: 0.9em;
     }
 }
 
-/* 데스크탑 */
-@media (min-width: 1025px) {
+@media (max-width: 480px) {
     .sajaseongeo-info {
-        font-size: 48px;
+        flex-direction: column;
     }
 
-    #writing-canvas {
-        width: 300px;
-        height: 300px;
+    #sajaseongeo-chinese {
+        font-size: 2em;
     }
 
-    .buttons button, .game-options button {
-        flex: 1 1 20%;
+    .sajaseongeo-annotations .annotation {
+        font-size: 0.85em;
     }
 
-    .learned-sajaseongeo-item {
-        font-size: 18px;
+    .sajaseongeo-meaning, .sajaseongeo-origin {
+        width: 100%;
+        font-size: 1em;
+    }
+
+    .quiz-option-btn {
+        padding: 6px 12px;
+        margin: 4px;
+        font-size: 0.85em;
+    }
+
+    #next-quiz-btn {
+        padding: 6px 20px;
+        margin: 15px auto;
+        font-size: 0.85em;
+    }
+
+    .sajaseongeo-origin {
+        font-size: 0.9em;
     }
 }
