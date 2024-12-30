@@ -84,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentUtterances = [];
     let currentSajaseongeo = null; // 현재 사자성어
 
+    let currentTypingInterval = null; // 현재 타이핑 인터벌 ID
+
     // ---------------------------
     // 3. 헬퍼 함수
     // ---------------------------
@@ -219,11 +221,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (screen === screens.manageLearned) {
             loadLearnedSajaseongeoManagement();
         } else if (screen === screens.game) {
-            // 게임 화면으로 전환 시 TTS 중지
+            // 게임 화면으로 전환 시 TTS 중지 및 타이핑 인터벌 중지
             stopAllTTS();
+            clearTyping();
         } else if (screen === screens.study) {
-            // 학습 화면으로 전환 시 TTS 초기화
+            // 학습 화면으로 전환 시 사자성어 표시
             displaySajaseongeo();
+        } else {
+            // 다른 화면으로 전환 시 TTS 중지 및 타이핑 인터벌 중지
+            stopAllTTS();
+            clearTyping();
         }
     }
 
@@ -714,6 +721,8 @@ document.addEventListener('DOMContentLoaded', () => {
             markCompletedCheckbox.checked = false;
             markCompletedCheckbox.disabled = true;
             currentSajaseongeo = null;
+            // 타이핑 인터벌 정리
+            clearTyping();
             return;
         }
         // 현재 인덱스가 범위를 벗어나지 않도록 조정
@@ -832,14 +841,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function typeText(element, text, delay = 100, callback = null) {
+        // 기존 인터벌이 있다면 중지
+        if (currentTypingInterval) {
+            clearInterval(currentTypingInterval);
+            currentTypingInterval = null;
+        }
+
         let index = 0;
         element.innerHTML = '';
-        const interval = setInterval(() => {
+        currentTypingInterval = setInterval(() => {
             if (index < text.length) {
                 element.innerHTML += text.charAt(index);
                 index++;
             } else {
-                clearInterval(interval);
+                clearInterval(currentTypingInterval);
+                currentTypingInterval = null;
                 if (callback) callback();
             }
         }, delay);
@@ -973,6 +989,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 playSajaseongeoTTS();
             }
         });
+    }
+
+    // ---------------------------
+    // 18. 타이핑 인터벌 중지 함수
+    // ---------------------------
+
+    function clearTyping() {
+        if (currentTypingInterval) {
+            clearInterval(currentTypingInterval);
+            currentTypingInterval = null;
+        }
+        sajaseongeoOrigin.innerText = '';
     }
 
 });
