@@ -1,9 +1,9 @@
 /* style.css */
 
-/* 구글 폰트 임포트 */
+/* Google Fonts Import */
 @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Gamja+Flower&family=Gowun+Dodum&display=swap');
 
-/* 커스텀 폰트 정의 */
+/* Custom Font Definition */
 @font-face {
     font-family: 'hanchanzhengkaiti';
     src: url('https://github.com/dalmook/dalhanja/blob/5d0ae8270b534bd99d42f76ad34f4550faa2f58d/hanchanzhengkaiti.ttf') format('truetype');
@@ -59,7 +59,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 button:hover {
@@ -83,21 +83,23 @@ button:hover {
     color: white;
 }
 
+#manage-learned-sajaseongeo-btn {
+    background-color: #ff69b4;
+    color: white;
+}
+
 #back-to-difficulty,
+#back-to-menu-from-managed,
 #back-to-menu-from-study,
 #back-to-menu-from-game,
 #clear-canvas-btn,
 #next-quiz-btn,
-#restart-matching-btn {
+#restart-matching-btn,
+#go-first-btn {
     background-color: #d3d3d3;
     color: #333;
     margin-top: 20px;
     padding: 10px 20px;
-}
-
-#next-quiz-btn {
-    display: block;
-    margin: 20px auto;
 }
 
 .action-btn {
@@ -120,6 +122,7 @@ button:hover {
     position: relative;
 }
 
+/* Sajaseongeo Info Styling */
 .sajaseongeo-info {
     display: flex;
     justify-content: center;
@@ -129,14 +132,33 @@ button:hover {
     margin-bottom: 10px;
     flex-direction: column; /* 세로 방향으로 배치 */
 }
-#speak-btn {
-    font-size: 24px;
-    padding: 5px 10px;
-    cursor: pointer;
-    background-color: #ffeb3b;
+
+/* Speak Button Styling */
+.speak-btn, .speak-btn-overlay {
+    background-color: rgba(30, 144, 255, 0.8); /* 반투명 파란색 배경 */
+    color: #ffffff;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%; /* 원형 버튼 */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
 }
+
+.speak-btn:hover, .speak-btn-overlay:hover {
+    background-color: rgba(30, 144, 255, 1); /* 호버 시 불투명 파란색으로 변경 */
+    transform: scale(1.1); /* 호버 시 버튼 약간 확대 */
+}
+
+.speak-btn i, .speak-btn-overlay i {
+    font-size: 20px;
+    color: inherit; /* 부모 버튼의 색상 상속 */
+}
+
+/* Sajaseongeo Text Styling */
 #sajaseongeo-chinese {
     font-size: 30px;
     color: #ff4500; /* 중국어 텍스트 색상 변경 */
@@ -150,6 +172,18 @@ button:hover {
 .sajaseongeo-details {
     font-size: 20px;
     margin-bottom: 10px;
+}
+
+/* "유래" 정보 스타일링 */
+.sajaseongeo-origin {
+    margin-top: 20px; /* 캔버스 아래 여백 */
+    font-size: 16px;
+    color: #333333;
+    min-height: 24px; /* 타이핑 효과를 위한 최소 높이 */
+    white-space: pre-wrap; /* 줄바꿈 유지 */
+    border-left: 3px solid #1e90ff; /* 왼쪽에 파란색 선 */
+    padding-left: 10px; /* 왼쪽 패딩 */
+    font-family: 'Gulim', sans-serif; /* 글꼴 설정 */
 }
 
 /* 읽기(음) 부분 애니메이션 */
@@ -174,11 +208,21 @@ button:hover {
     display: none;
 }
 
+/* Writing Canvas Styling */
+.canvas-container {
+    position: relative; /* 내부 요소의 절대 위치를 기준으로 설정 */
+    display: inline-block; /* 캔버스와 버튼을 인라인 블록으로 배치 */
+    margin-bottom: 15px; /* 캔버스와 아래 요소 간 간격 */
+}
+
 #writing-canvas {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 2px solid #1e90ff;
+    border-radius: 10px;
     background-color: #ffffff;
-    touch-action: none;
+    touch-action: none; /* 터치 이벤트 방지 */
+    width: 100%;
+    max-width: 300px;
+    height: auto;
 }
 
 .completion-checkbox {
@@ -302,6 +346,12 @@ button:hover {
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.match-item:hover {
+    background-color: #90ee90;
+    transform: scale(1.05);
 }
 
 .match-item.matched {
@@ -340,16 +390,10 @@ button:hover {
 }
 
 /* 광고 컨테이너 스타일 */
-.adsense-container {
+.adsense-container, .adsense-container2 {
     width: 100%;
     max-width: 728px; /* 광고 최대 너비 설정 */
     margin: 20px auto; /* 중앙 정렬 및 상하 마진 설정 */
-}
-
-.adsense-container2 {
-    width: 100%;
-    max-width: 728px; /* 데스크탑에서의 최대 너비 설정 */
-    margin: 300px auto; /* 중앙 정렬 및 상하 마진 설정 */
     box-sizing: border-box; /* 패딩과 보더 포함 */
     padding: 10px; /* 내부 여백 설정 */
     border: 1px solid #ccc; /* 경계선 설정 */
@@ -357,7 +401,7 @@ button:hover {
     transition: max-height 0.3s ease; /* 부드러운 전환 효과 */
 }
 
-/* stroke-order-svg 클래스 스타일링 */
+/* stroke-order-svg 클래스 스타일링 (현재 사용하지 않음) */
 .stroke-order-svg {
     position: absolute;
     top: 10px;          /* 캔버스 상단으로부터의 거리 */
@@ -371,15 +415,14 @@ button:hover {
 
 /* 모바일 세로 */
 @media (max-width: 600px) {
-    .adsense-container {
+    .adsense-container, .adsense-container2 {
         max-width: 100%; /* 모바일에서는 전체 너비 사용 */
-    } 
+    }
     .adsense-container2 {
-        max-width: 100%; /* 모바일에서는 전체 너비 사용 */
         max-height: 150px; /* 모바일에서의 최대 높이 설정 */
         margin: 300px auto;
         overflow-y: scroll; /* 세로 스크롤 추가 */
-    }    
+    }
     .sajaseongeo-info {
         font-size: 36px;
     }
@@ -410,7 +453,6 @@ button:hover {
         height: 40px;
         font-size: 14px;
     }
-
 }
 
 /* 모바일 가로 및 태블릿 */
