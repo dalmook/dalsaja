@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sajaseongeoMeaning = document.getElementById('sajaseongeo-meaning');
     const sajaseongeoChinese = document.getElementById('sajaseongeo-chinese');
     const speakBtn = document.getElementById('speak-btn');
+    const speakBtnOverlay = document.getElementById('speak-btn-overlay');
     const writingCanvas = document.getElementById('writing-canvas');
     const clearCanvasBtn = document.getElementById('clear-canvas-btn');
     const goFirstBtn = document.getElementById('go-first-btn');
@@ -38,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextBtn = document.getElementById('next-btn');
     const orderOptions = document.getElementsByName('order');
     const markCompletedCheckbox = document.getElementById('mark-completed');
+
+    // 유래 정보 요소
+    const sajaseongeoOrigin = document.getElementById('sajaseongeo-origin');
 
     // 낱말게임 화면 요소
     const quizMeaningReadingBtn = document.getElementById('quiz-meaning-reading-btn');
@@ -321,10 +325,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const koreanText = `${currentSajaseongeo.사자성어}`;
         const meaningText = `${currentSajaseongeo.뜻}`;
         const chineseText = `${currentSajaseongeo.중국어}`;
+        const originText = `${currentSajaseongeo.유래 || ''}`; // 유래가 없는 경우 빈 문자열
 
         // 안드로이드 환경에서 TTS 지원 시
         if (typeof Android !== 'undefined' && Android.speak) {      
-            Android.speak(koreanText, meaningText, chineseText); // 세 개의 파라미터로 전달
+            Android.speak(koreanText, meaningText, chineseText, originText); // 네 개의 파라미터로 전달
         }
         // 웹 브라우저에서 TTS 지원 시
         else if ('speechSynthesis' in window) {
@@ -342,6 +347,17 @@ document.addEventListener('DOMContentLoaded', () => {
             utteranceChinese.lang = 'zh-CN';
             window.speechSynthesis.speak(utteranceChinese);
             currentUtterances.push(utteranceChinese);
+
+            // "유래" 읽기 음성 추가 (타이핑 완료 후)
+            if (originText.trim() !== '') {
+                const utteranceOrigin = new SpeechSynthesisUtterance(originText);
+                utteranceOrigin.lang = 'ko-KR';
+                utteranceOrigin.onend = () => {
+                    // 추가 동작이 필요하면 여기에
+                };
+                window.speechSynthesis.speak(utteranceOrigin);
+                currentUtterances.push(utteranceOrigin);
+            }
         }
         else {
             console.warn("이 브라우저는 음성 합성을 지원하지 않습니다.");
@@ -667,6 +683,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 스피커 아이콘은 기존 'speak-btn'을 활용
             markCompletedCheckbox.checked = false;
             markCompletedCheckbox.disabled = true;
+            sajaseongeoOrigin.innerText = '';
             currentSajaseongeo = null;
             return;
         }
@@ -712,37 +729,18 @@ document.addEventListener('DOMContentLoaded', () => {
         ctxCanvas.fillText(sajaseongeoText, canvasWidth / 2, canvasHeight / 2);
         ctxCanvas.globalAlpha = 1.0; // 다시 불투명하게
 
-        // 쓰기순서 SVG 관련 코드 제거
-        /*
-        // 쓰기순서 SVG 표시 (제거됨)
-        const strokeOrderSvg = document.getElementById('stroke-order-svg');
-        if (currentSajaseongeo.쓰기순서) {
-            if (svgLoopInterval) {
-                clearInterval(svgLoopInterval);
-            }
-
-            const animationDuration = currentSajaseongeo.duration ? currentSajaseongeo.duration + 2000 : 5000;
-
-            // SVG 로드 시 캐싱 방지를 위해 타임스탬프 추가
-            strokeOrderSvg.src = `${currentSajaseongeo.쓰기순서}?t=${new Date().getTime()}`;
-
-            // 애니메이션이 끝난 후 SVG를 다시 로드하여 애니메이션 재시작
-            svgLoopInterval = setInterval(() => {
-                strokeOrderSvg.src = `${currentSajaseongeo.쓰기순서}?t=${new Date().getTime()}`;
-            }, animationDuration);
-        } else {
-            strokeOrderSvg.src = '';
-
-            if (svgLoopInterval) {
-                clearInterval(svgLoopInterval);
-                svgLoopInterval = null;
-            }
-        }
-        */
-
         // 학습완료 체크박스 상태 설정
         markCompletedCheckbox.disabled = false;
         markCompletedCheckbox.checked = learnedSajaseongeo.includes(currentSajaseongeo.사자성어);
+
+        // 유래 표시 및 타이핑 효과
+        if (currentSajaseongeo.유래) {
+            typeText(sajaseongeoOrigin, currentSajaseongeo.유래, 50, () => {
+                readAloud(currentSajaseongeo.유래);
+            });
+        } else {
+            sajaseongeoOrigin.innerText = '';
+        }
     }
 
     // ---------------------------
@@ -790,8 +788,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // 16. TextToSpeech 기능 구현
     // ---------------------------
 
+    function readAloud(text) {
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ko-KR';
+            window.speechSynthesis.speak(utterance);
+        } else {
+            console.warn("이 브라우저는 음성 합성을 지원하지 않습니다.");
+        }
+    }
+
+    function typeText(element, text, delay = 100, callback = null) {
+        let index = 0;
+        element.innerHTML = '';
+        const interval = setInterval(() => {
+            if (index < text.length) {
+                element.innerHTML += text.charAt(index);
+                index++;
+            } else {
+                clearInterval(interval);
+                if (callback) callback();
+            }
+        }, delay);
+    }
+
+    // Speak Button 이벤트
     if (speakBtn) {
         speakBtn.addEventListener('click', () => {
+            playSajaseongeoTTS();
+        });
+    }
+
+    if (speakBtnOverlay) {
+        speakBtnOverlay.addEventListener('click', () => {
             playSajaseongeoTTS();
         });
     }
