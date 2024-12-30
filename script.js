@@ -33,9 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const sajaseongeoMeaning = document.getElementById('sajaseongeo-meaning');
     const sajaseongeoChinese = document.getElementById('sajaseongeo-chinese');
     const speakBtn = document.getElementById('speak-btn');
-    const speakBtnOverlay = document.getElementById('speak-btn-overlay');
-    const writingCanvas = document.getElementById('writing-canvas');
-    const clearCanvasBtn = document.getElementById('clear-canvas-btn');
+    // speakBtnOverlay는 삭제됨
+    const writingCanvas = document.getElementById('writing-canvas'); // 삭제 예정
+    const clearCanvasBtn = document.getElementById('clear-canvas-btn'); // 삭제 예정
     const goFirstBtn = document.getElementById('go-first-btn');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
@@ -567,6 +567,129 @@ document.addEventListener('DOMContentLoaded', () => {
         nextQuizBtn.style.display = 'none';
     }
 
+    // 다음 퀴즈 질문 로드 함수
+    function loadNextQuizQuestion() {
+        if (quizQuestions.length === 0) {
+            quizQuestion.innerHTML = '<b style="color: #ff6347;">퀴즈 완료!</b>';
+            quizOptions.innerHTML = '';
+            quizFeedback.innerText = '';
+            nextQuizBtn.style.display = 'none';
+
+            let currentScore = parseInt(currentScoreSpan.innerText);
+            let highScore = getHighScore(selectedLevel);
+            if (currentScore > highScore) {
+                setHighScore(selectedLevel, currentScore);
+                alert(`축하합니다! 새로운 최고 점수: ${currentScore}점`);
+            } else {
+                alert(`현재 점수: ${currentScore}점. 최고 점수: ${highScore}점`);
+            }
+            return;
+        }
+
+        const currentQuestion = quizQuestions.shift();
+
+        if (selectedQuizType === 'meaningChinese') {
+            // 퀴즈(뜻중국어): 뜻과 중국어를 보여주고 사자성어를 맞추는 퀴즈
+            quizQuestion.innerHTML = `"<span style="color: #1e90ff; font-weight: bold;">${currentQuestion.뜻} (${currentQuestion.중국어})</span>"인 사자성어는?`;
+
+            // 옵션 생성 (정답 포함 총 4개)
+            let options = [currentQuestion.사자성어];
+            while (options.length < 4 && sajaseongeoData.length > options.length) {
+                const randomSajaseongeo = sajaseongeoData[Math.floor(Math.random() * sajaseongeoData.length)].사자성어;
+                if (!options.includes(randomSajaseongeo)) {
+                    options.push(randomSajaseongeo);
+                }
+            }
+            options = shuffleArray(options);
+
+            // 옵션 버튼 생성
+            quizOptions.innerHTML = '';
+            options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.innerText = option;
+                btn.classList.add('quiz-option-btn');
+                btn.addEventListener('click', () => {
+                    if (option === currentQuestion.사자성어) {
+                        quizFeedback.style.color = '#32cd32';
+                        quizFeedback.innerText = `정답입니다! ${currentQuestion.뜻} (${currentQuestion.중국어})`;
+                        let currentScore = parseInt(currentScoreSpan.innerText);
+                        currentScore += 10;
+                        currentScoreSpan.innerText = currentScore.toString();
+                    } else {
+                        quizFeedback.style.color = '#ff0000';
+                        quizFeedback.innerText = '오답입니다.';
+                        let currentScore = parseInt(currentScoreSpan.innerText);
+                        currentScore -= 5;
+                        if (currentScore < 0) currentScore = 0;
+                        currentScoreSpan.innerText = currentScore.toString();
+                    }
+                    nextQuizBtn.style.display = 'block';
+                    
+                    // 모든 옵션 버튼 비활성화
+                    const allButtons = quizOptions.querySelectorAll('button');
+                    allButtons.forEach(button => {
+                        button.disabled = true;
+                    });
+                });
+                quizOptions.appendChild(btn);
+            });
+
+        } else if (selectedQuizType === 'sajaseongeo') {
+            // 퀴즈(사자성어): 사자성어를 보여주고 뜻과 중국어를 맞추는 퀴즈
+            quizQuestion.innerHTML = `<span style="color: #1e90ff;"> "${currentQuestion.사자성어}"</span>의 뜻과 중국어는 무엇인가요?`;
+
+            // 정답 조합
+            let correctAnswer = `${currentQuestion.뜻} (${currentQuestion.중국어})`;
+
+            // 옵션 생성 (정답 포함 총 4개)
+            let options = [correctAnswer];
+            while (options.length < 4 && sajaseongeoData.length > options.length) {
+                const randomSajaseongeo = sajaseongeoData[Math.floor(Math.random() * sajaseongeoData.length)];
+                const randomAnswer = `${randomSajaseongeo.뜻} (${randomSajaseongeo.중국어})`;
+                if (!options.includes(randomAnswer)) {
+                    options.push(randomAnswer);
+                }
+            }
+            options = shuffleArray(options);
+
+            // 옵션 버튼 생성
+            quizOptions.innerHTML = '';
+            options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.innerText = option;
+                btn.classList.add('quiz-option-btn');
+                btn.addEventListener('click', () => {
+                    if (option === correctAnswer) {
+                        quizFeedback.style.color = '#32cd32';
+                        quizFeedback.innerText = `정답입니다! ${currentQuestion.사자성어} (${currentQuestion.중국어})`;
+                        let currentScore = parseInt(currentScoreSpan.innerText);
+                        currentScore += 10;
+                        currentScoreSpan.innerText = currentScore.toString();
+                    } else {
+                        quizFeedback.style.color = '#ff0000';
+                        quizFeedback.innerText = '오답입니다.';
+                        let currentScore = parseInt(currentScoreSpan.innerText);
+                        currentScore -= 5;
+                        if (currentScore < 0) currentScore = 0;
+                        currentScoreSpan.innerText = currentScore.toString();
+                    }
+                    nextQuizBtn.style.display = 'block';
+                    
+                    // 모든 옵션 버튼 비활성화
+                    const allButtons = quizOptions.querySelectorAll('button');
+                    allButtons.forEach(button => {
+                        button.disabled = true;
+                    });
+                });
+                quizOptions.appendChild(btn);
+            });
+        }
+
+        // Reset quizFeedback and hide nextQuizBtn
+        quizFeedback.innerText = '';
+        nextQuizBtn.style.display = 'none';
+    }
+
     // 다음 퀴즈 로드 버튼 이벤트
     if (nextQuizBtn) {
         nextQuizBtn.addEventListener('click', () => {
@@ -727,12 +850,12 @@ document.addEventListener('DOMContentLoaded', () => {
             sajaseongeoChinese.innerText = '모든 사자성어를 학습 완료했습니다!';
             sajaseongeoCharacter.innerText = '';
             sajaseongeoMeaning.innerText = '';
-            writingCanvas.getContext('2d').clearRect(0, 0, writingCanvas.width, writingCanvas.height);
+            // writingCanvas.getContext('2d').clearRect(0, 0, writingCanvas.width, writingCanvas.height); // 캔버스 삭제됨
             // "유래" 정보 비우기
             sajaseongeoOrigin.innerText = '';
             // 스피커 버튼 비활성화
             speakBtn.disabled = true;
-            speakBtnOverlay.disabled = true;
+            // speakBtnOverlay.disabled = true; // 삭제됨
             // 학습완료 체크박스 비활성화
             markCompletedCheckbox.checked = false;
             markCompletedCheckbox.disabled = true;
@@ -750,38 +873,9 @@ document.addEventListener('DOMContentLoaded', () => {
         sajaseongeoCharacter.innerText = currentSajaseongeo.사자성어;
         sajaseongeoMeaning.innerText = currentSajaseongeo.뜻;
 
-        // 캔버스 초기화
-        const ctxCanvas = writingCanvas.getContext('2d');
-        ctxCanvas.clearRect(0, 0, writingCanvas.width, writingCanvas.height);
+        // 캔버스 초기화 제거
 
-        // 사자성어 가이드 그리기
-
-        // 동적 폰트 크기 설정
-        const canvasWidth = writingCanvas.width;
-        const canvasHeight = writingCanvas.height;
-        const sajaseongeoText = currentSajaseongeo.중국어;
-        const maxFontSize = 150; // 최대 폰트 크기 (중국어는 일반적으로 크기 조절)
-        const minFontSize = 30;  // 최소 폰트 크기
-        let fontSize = maxFontSize;
-
-        while (fontSize > minFontSize) {
-            ctxCanvas.font = `${fontSize}px 'hanchanzhengkaiti', sans-serif`;
-            const textMetrics = ctxCanvas.measureText(sajaseongeoText);
-            const textWidth = textMetrics.width;
-            const textHeight = fontSize;
-
-            if (textWidth <= canvasWidth * 0.8 && textHeight <= canvasHeight * 0.8) {
-                break;
-            }
-            fontSize -= 10;
-        }
-
-        ctxCanvas.globalAlpha = 0.3; // 반투명
-        ctxCanvas.textAlign = 'center';
-        ctxCanvas.textBaseline = 'middle';
-        ctxCanvas.fillStyle = '#000000';
-        ctxCanvas.fillText(sajaseongeoText, canvasWidth / 2, canvasHeight / 2);
-        ctxCanvas.globalAlpha = 1.0; // 다시 불투명하게
+        // 사자성어 가이드 그리기 제거
 
         // 학습완료 체크박스 상태 설정
         markCompletedCheckbox.disabled = false;
@@ -798,7 +892,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 스피커 버튼 활성화
         speakBtn.disabled = false;
-        speakBtnOverlay.disabled = false;
     }
 
     // ---------------------------
@@ -884,128 +977,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (speakBtnOverlay) {
-        speakBtnOverlay.addEventListener('click', () => {
-            playSajaseongeoTTS();
-        });
-    }
+    // speakBtnOverlay는 삭제됨
 
     // ---------------------------
     // 17. 캔버스 쓰기 기능 구현
     // ---------------------------
 
-    // 캔버스 설정
-    const ctxCanvas = writingCanvas.getContext('2d');
-    ctxCanvas.lineWidth = 5;
-    ctxCanvas.lineCap = 'round';
-    ctxCanvas.lineJoin = 'round';
-    let drawing = false;
-
-    writingCanvas.addEventListener('mousedown', startDrawing);
-    writingCanvas.addEventListener('mouseup', stopDrawing);
-    writingCanvas.addEventListener('mousemove', drawCanvas);
-    writingCanvas.addEventListener('touchstart', startDrawing, {passive: false});
-    writingCanvas.addEventListener('touchend', stopDrawing);
-    writingCanvas.addEventListener('touchmove', drawCanvas, {passive: false});
-
-    function startDrawing(e) {
-        e.preventDefault();
-        drawing = true;
-        ctxCanvas.beginPath();
-        const { x, y } = getCanvasCoordinates(e);
-        ctxCanvas.moveTo(x, y);
-    }
-
-    function stopDrawing(e) {
-        e.preventDefault();
-        drawing = false;
-    }
-
-    function drawCanvas(e) {
-        if (!drawing) return;
-        e.preventDefault();
-        const { x, y } = getCanvasCoordinates(e);
-        ctxCanvas.lineTo(x, y);
-        ctxCanvas.stroke();
-    }
-
-    function getCanvasCoordinates(e) {
-        const rect = writingCanvas.getBoundingClientRect();
-        let x, y;
-        if (e.touches) {
-            x = (e.touches[0].clientX - rect.left) * (writingCanvas.width / rect.width);
-            y = (e.touches[0].clientY - rect.top) * (writingCanvas.height / rect.height);
-        } else {
-            x = (e.clientX - rect.left) * (writingCanvas.width / rect.width);
-            y = (e.clientY - rect.top) * (writingCanvas.height / rect.height);
-        }
-        return { x, y };
-    }
-
-    // 쓰기 초기화 버튼
-    if (clearCanvasBtn) {
-        clearCanvasBtn.addEventListener('click', () => {
-            ctxCanvas.clearRect(0, 0, writingCanvas.width, writingCanvas.height);
-            displaySajaseongeo(); // 사자성어 가이드 다시 그리기
-        });
-    }
-
-    // 처음으로 버튼
-    if (goFirstBtn) {
-        goFirstBtn.addEventListener('click', () => {
-            currentIndex = 0;
-            displaySajaseongeo();
-            saveProgress(selectedLevel, currentIndex);
-            playSajaseongeoTTS();
-        });
-    }
-
-    // 이전 버튼
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                displaySajaseongeo();
-                saveProgress(selectedLevel, currentIndex);
-                playSajaseongeoTTS();
-            }
-        });
-    }
-
-    // 다음 버튼
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (currentIndex < sajaseongeoData.length - 1) {
-                currentIndex++;
-                displaySajaseongeo();
-                saveProgress(selectedLevel, currentIndex);
-                playSajaseongeoTTS();
-            }
-        });
-    }
-
-    // 순서 변경 시 초기화
-    orderOptions.forEach(option => {
-        option.addEventListener('change', () => {
-            initializeStudy();
-        });
-    });
-
-    // 학습완료 체크박스 이벤트
-    if (markCompletedCheckbox) {
-        markCompletedCheckbox.addEventListener('change', () => {
-            const sajaseongeo = currentSajaseongeo ? currentSajaseongeo.사자성어 : null;
-            if (sajaseongeo) {
-                if (markCompletedCheckbox.checked) {
-                    markSajaseongeoAsLearned(sajaseongeo);
-                } else {
-                    unmarkSajaseongeoAsLearned(sajaseongeo);
-                }
-                displaySajaseongeo(); // 업데이트 후 표시
-                playSajaseongeoTTS();
-            }
-        });
-    }
+    // 캔버스 관련 모든 코드 삭제됨
 
     // ---------------------------
     // 18. 타이핑 인터벌 중지 함수
