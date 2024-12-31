@@ -164,6 +164,7 @@ body {
 
 /* 주석 표시 영역 */
 .sajaseongeo-annotations {
+    white-space: nowrap;
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
