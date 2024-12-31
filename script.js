@@ -646,17 +646,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 주석 표시 영역 초기화
         const annotationsDiv = document.getElementById('sajaseongeo-annotations');
-        annotationsDiv.innerHTML = ''; // 기존 내용 삭제
+annotationsDiv.innerHTML = ''; // 기존 내용 삭제
 
-        if (currentSajaseongeo.annotations && currentSajaseongeo.annotations.length > 0) {
-            currentSajaseongeo.annotations.forEach(annotation => {
-                const span = document.createElement('span');
-                span.classList.add('annotation');
-                span.innerHTML = `${annotation.meaning} (${annotation.character}) `;
-                annotationsDiv.appendChild(span);
-            });
-        }
-
+if (currentSajaseongeo.annotations && currentSajaseongeo.annotations.length > 0) {
+    let htmlContent = ''; // 한 줄로 추가할 HTML 문자열
+    currentSajaseongeo.annotations.forEach(annotation => {
+        htmlContent += `<span class="annotation">${annotation.meaning} (${annotation.character})</span> `;
+    });
+    annotationsDiv.innerHTML = htmlContent.trim(); // HTML 내용 추가
+}
         // 학습완료 체크박스 상태 설정
         markCompletedCheckbox.disabled = false;
         markCompletedCheckbox.checked = learnedSajaseongeo.includes(currentSajaseongeo.사자성어);
