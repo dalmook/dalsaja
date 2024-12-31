@@ -417,6 +417,127 @@
     },
     "고급": {
         "학습하기": [
+    {
+        "사자성어": "사필귀정",
+        "뜻": "모든 일이 반드시 바르게 되돌아온다",
+        "중국어": "四必歸正",
+        "유래": "모든 일이 반드시 바르게 돌아온다는 뜻",
+        "annotations": [
+            {"character": "四", "meaning": "사: 반드시"},
+            {"character": "必", "meaning": "필: 반드시"},
+            {"character": "歸", "meaning": "귀: 돌아갈"},
+            {"character": "正", "meaning": "정: 바를"}
+        ]
+    },
+    {
+        "사자성어": "청출어람",
+        "뜻": "제자가 스승보다 더 뛰어나다",
+        "중국어": "靑出於藍",
+        "유래": "쪽에서 나온 푸른 물감이 쪽보다 더 푸르다",
+        "annotations": [
+            {"character": "靑", "meaning": "청: 푸를"},
+            {"character": "出", "meaning": "출: 나올"},
+            {"character": "於", "meaning": "어: ~에서"},
+            {"character": "藍", "meaning": "람: 쪽"}
+        ]
+    },
+    {
+        "사자성어": "이심전심",
+        "뜻": "말없이 서로의 마음을 이해함",
+        "중국어": "以心傳心",
+        "유래": "마음에서 마음으로 전한다는 뜻",
+        "annotations": [
+            {"character": "以", "meaning": "이: 써서"},
+            {"character": "心", "meaning": "심: 마음"},
+            {"character": "傳", "meaning": "전: 전할"},
+            {"character": "心", "meaning": "심: 마음"}
+        ]
+    },
+    {
+        "사자성어": "호연지기",
+        "뜻": "하늘과 땅 사이에 가득 찬 넓고 큰 기운",
+        "중국어": "浩然之氣",
+        "유래": "넓고 크며 올곧은 기운",
+        "annotations": [
+            {"character": "浩", "meaning": "호: 넓을"},
+            {"character": "然", "meaning": "연: 그러할"},
+            {"character": "之", "meaning": "지: ~의"},
+            {"character": "氣", "meaning": "기: 기운"}
+        ]
+    },
+    {
+        "사자성어": "살신성인",
+        "뜻": "자신을 희생하여 옳은 일을 이룸",
+        "중국어": "殺身成仁",
+        "유래": "자기를 죽여 인을 이룬다는 뜻",
+        "annotations": [
+            {"character": "殺", "meaning": "살: 죽일"},
+            {"character": "身", "meaning": "신: 몸"},
+            {"character": "成", "meaning": "성: 이룰"},
+            {"character": "仁", "meaning": "인: 어질"}
+        ]
+    },
+    {
+        "사자성어": "수구초심",
+        "뜻": "근본을 잊지 않음",
+        "중국어": "首丘初心",
+        "유래": "여우가 죽을 때 고향 언덕을 향한다는 뜻",
+        "annotations": [
+            {"character": "首", "meaning": "수: 머리"},
+            {"character": "丘", "meaning": "구: 언덕"},
+            {"character": "初", "meaning": "초: 처음"},
+            {"character": "心", "meaning": "심: 마음"}
+        ]
+    },
+    {
+        "사자성어": "독서삼매",
+        "뜻": "책 읽기에 깊이 몰두함",
+        "중국어": "讀書三昧",
+        "유래": "책을 읽는 데 깊이 빠짐",
+        "annotations": [
+            {"character": "讀", "meaning": "독: 읽을"},
+            {"character": "書", "meaning": "서: 책"},
+            {"character": "三", "meaning": "삼: 셋"},
+            {"character": "昧", "meaning": "매: 어두울"}
+        ]
+    },
+    {
+        "사자성어": "연목구어",
+        "뜻": "불가능한 일을 하려 함",
+        "중국어": "緣木求魚",
+        "유래": "나무에 올라가서 물고기를 구한다는 뜻",
+        "annotations": [
+            {"character": "緣", "meaning": "연: 인연"},
+            {"character": "木", "meaning": "목: 나무"},
+            {"character": "求", "meaning": "구: 구할"},
+            {"character": "魚", "meaning": "어: 물고기"}
+        ]
+    },
+    {
+        "사자성어": "권토중래",
+        "뜻": "실패를 딛고 다시 도전함",
+        "중국어": "捲土重來",
+        "유래": "흙먼지를 일으키며 다시 온다는 뜻",
+        "annotations": [
+            {"character": "捲", "meaning": "권: 말 권"},
+            {"character": "土", "meaning": "토: 흙"},
+            {"character": "重", "meaning": "중: 다시"},
+            {"character": "來", "meaning": "래: 올"}
+        ]
+    },
+    {
+        "사자성어": "교학상장",
+        "뜻": "가르치고 배우며 함께 성장함",
+        "중국어": "敎學相長",
+        "유래": "가르치고 배우는 것이 서로를 성장시킨다",
+        "annotations": [
+            {"character": "敎", "meaning": "교: 가르칠"},
+            {"character": "學", "meaning": "학: 배울"},
+            {"character": "相", "meaning": "상: 서로"},
+            {"character": "長", "meaning": "장: 자랄"}
+        ]
+    }
+        
         ]
     }
 }
