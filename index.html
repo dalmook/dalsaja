@@ -68,46 +68,49 @@
         <button id="back-to-menu-from-managed" class="back-btn">뒤로</button>
     </div>
 
-<!-- 학습하기 화면 -->
-<div id="study-screen" class="screen active">
-    <h1>학습하기</h1>
-    <div id="sajaseongeo-display">
-        <!-- 사자성어 정보 -->
-        <div class="sajaseongeo-info">
-            <span id="sajaseongeo-chinese">一筆揮之</span>
-            <span id="sajaseongeo-korean">일필휘지</span>
-            <button id="speak-btn" class="speak-btn" title="음성 읽기" aria-label="음성 읽기">
-                <i class="fas fa-volume-up"></i> 스피커
-            </button>
+    <!-- 학습하기 화면 -->
+    <div id="study-screen" class="screen">
+        <h1>학습하기 - <span id="study-level"></span></h1>
+        <div class="order-options">
+            <label>
+                <input type="radio" name="order" value="sequential" checked> 순차
+            </label>
+            <label>
+                <input type="radio" name="order" value="random"> 랜덤
+            </label>
+            <button id="back-to-menu-from-study" class="back-btn">뒤로</button>
         </div>
-        
-        <!-- 각 한자의 의미 -->
-        <div class="sajaseongeo-details">
-            <span class="character">一</span> <span class="meaning">한</span>
-            <span class="character">筆</span> <span class="meaning">붓</span>
-            <span class="character">揮</span> <span class="meaning">휘두를</span>
-            <span class="character">之</span> <span class="meaning">갈</span>
+        <div id="sajaseongeo-display">
+            <div class="sajaseongeo-info">
+                <span id="sajaseongeo-chinese">四必歸正</span>
+                <button id="speak-btn" class="speak-btn" title="음성 읽기" aria-label="음성 읽기">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <!-- 주석 표시 영역 -->
+            <div id="sajaseongeo-annotations" class="sajaseongeo-annotations">
+                <span class="annotation">사: 반드시 (四)</span>
+                <span class="annotation">필: 반드시 (必)</span>
+                <span class="annotation">귀: 돌아갈 (歸)</span>
+                <span class="annotation">정: 바를 (正)</span>
+            </div>
+            <div class="sajaseongeo-details">
+                <p><span id="sajaseongeo-meaning">모든 일이 반드시 바르게 되돌아온다</span></p>
+            </div>
+            <!-- 유래를 타이핑 효과로 나타내는 컨테이너 -->
+            <div id="sajaseongeo-origin" class="sajaseongeo-origin"></div>
+            <!-- 학습완료 체크박스 추가 -->
+            <div class="completion-checkbox">
+                <label>
+                    <input type="checkbox" id="mark-completed"> 학습 완료
+                </label>
+            </div>
         </div>
-        
-        <!-- 뜻 -->
-        <div class="sajaseongeo-meaning">
-            <h2>뜻</h2>
-            <p>모든 일이 반드시 바르게 되돌아온다.</p>
-        </div>
-        
-        <!-- 유래 -->
-        <div class="sajaseongeo-origin">
-            <h2>유래</h2>
-            <p>이 사자성어는 ... (유래 내용)</p>
+        <div class="navigation-buttons">
+            <button id="prev-btn">이전</button>
+            <button id="next-btn">다음</button>
         </div>
     </div>
-    
-    <!-- 네비게이션 버튼 -->
-    <div class="navigation-buttons">
-        <button id="prev-btn">이전</button>
-        <button id="next-btn">다음</button>
-    </div>
-</div>
 
     <!-- 낱말게임 화면 -->
     <div id="game-screen" class="screen">
