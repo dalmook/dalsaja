@@ -269,18 +269,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (backToDifficultyBtn) {
         backToDifficultyBtn.addEventListener('click', () => {
             showScreen(screens.difficulty);
+            stopAllTTS();
         });
     }
 
     if (backToMenuFromManagedBtn) {
         backToMenuFromManagedBtn.addEventListener('click', () => {
             showScreen(screens.mainMenu);
+            stopAllTTS();
         });
     }
 
     if (backToMenuFromStudyBtn) {
         backToMenuFromStudyBtn.addEventListener('click', () => { 
             showScreen(screens.mainMenu);
+            stopAllTTS();
         });
     }
 
