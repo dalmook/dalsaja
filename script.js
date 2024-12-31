@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 학습하기 화면 요소
     const studyLevelSpan = document.getElementById('study-level');
     const sajaseongeoChinese = document.getElementById('sajaseongeo-chinese');
+    const sajaseongeoKorean = document.getElementById('sajaseongeo-korean');
     const sajaseongeoMeaning = document.getElementById('sajaseongeo-meaning');
     const speakBtn = document.getElementById('speak-btn');
     const prevBtn = document.getElementById('prev-btn');
@@ -640,6 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         currentSajaseongeo = sajaseongeoData[availableIndices[currentIndex]];
         sajaseongeoChinese.innerText = currentSajaseongeo.중국어;
+        sajaseongeoKorean.innerText = currentSajaseongeo.사자성어;
         sajaseongeoMeaning.innerText = currentSajaseongeo.뜻;
 
         // 주석 표시 영역 초기화
