@@ -7,10 +7,10 @@
                 "중국어": "四必歸正",
                 "유래": "모든 일이 반드시 바르게 돌아온다는 뜻",
                 "annotations": [
-                    {"character": "四", "meaning": "반드시(사)"},
-                    {"character": "必", "meaning": "반드시(필)"},
-                    {"character": "歸", "meaning": "돌아갈(귀)"},
-                    {"character": "正", "meaning": "바를(정)"}
+                    {"character": "四", "meaning": "사: 반드시"},
+                    {"character": "必", "meaning": "필: 반드시"},
+                    {"character": "歸", "meaning": "귀: 돌아갈"},
+                    {"character": "正", "meaning": "정: 바를"}
                 ]
             },
             {
