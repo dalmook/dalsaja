@@ -756,6 +756,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('이전 버튼 클릭됨'); // 디버깅용 로그
             if (currentIndex > 0) {
                 currentIndex--;
+                stopAllTTS();
                 displaySajaseongeo();
                 saveProgress(selectedLevel, currentIndex);
             } else {
@@ -769,6 +770,7 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('다음 버튼 클릭됨'); // 디버깅용 로그
             if (currentIndex < shuffledIndices.length - 1) {
                 currentIndex++;
+                stopAllTTS();
                 displaySajaseongeo();
                 saveProgress(selectedLevel, currentIndex);
             } else {
