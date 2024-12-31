@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 낱말게임 화면 요소
     const quizMeaningReadingBtn = document.getElementById('quiz-meaning-reading-btn');
     const quizSajaseongeoBtn = document.getElementById('quiz-sajaseongeo-btn');
+    const quizInitialConsonantBtn = document.getElementById('quiz-initial-consonant-btn'); // 새로 추가된 버튼
     const quizGame = document.getElementById('quiz-game');
     const quizQuestion = document.getElementById('quiz-question');
     const quizOptions = document.getElementById('quiz-options');
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---------------------------
 
     let selectedLevel = '초급'; // 현재 선택된 난이도 ('초급', '중급', '고급')
-    let selectedQuizType = ''; // 현재 선택된 퀴즈 유형 ('meaningChinese' 또는 'sajaseongeo')
+    let selectedQuizType = ''; // 현재 선택된 퀴즈 유형 ('meaningChinese', 'sajaseongeo', 'initialConsonant')
     let quizQuestions = []; // 퀴즈 질문 배열
     let sajaseongeoData = []; // 사자성어 데이터 배열
     let currentIndex = 0;
@@ -311,6 +312,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (quizInitialConsonantBtn) { // 초성퀴즈 버튼 이벤트
+        quizInitialConsonantBtn.addEventListener('click', () => {
+            showScreen(screens.game);
+            quizGame.style.display = 'block';
+            initializeQuiz('initialConsonant'); // 초성퀴즈 초기화
+        });
+    }
+
     // ---------------------------
     // 5. 학습하기 초기화 함수
     // ---------------------------
@@ -405,10 +414,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let quizData = [];
         if (selectedQuizType === 'meaningChinese') {
             // 퀴즈(뜻중국어): 뜻과 중국어를 보여주고 사자성어를 맞추는 퀴즈
-            quizData = sajaseongeoData.filter(item => item.뜻 && item.중국어);
+            quizData = sajaseongeoData.filter(item => item.뜻 && item.중국어 && item.사자성어);
         } else if (selectedQuizType === 'sajaseongeo') {
             // 퀴즈(사자성어): 사자성어를 보여주고 뜻과 중국어를 맞추는 퀴즈
-            quizData = sajaseongeoData.filter(item => item.뜻 && item.중국어);
+            quizData = sajaseongeoData.filter(item => item.뜻 && item.중국어 && item.사자성어);
+        } else if (selectedQuizType === 'initialConsonant') {
+            // 초성퀴즈: 초성만 보여주고 사자성어를 맞추는 퀴즈
+            quizData = sajaseongeoData.filter(item => item.사자성어 && item.뜻 && item.중국어);
         }
 
         const totalQuestions = Math.min(20, quizData.length);
@@ -539,6 +551,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
                 quizOptions.appendChild(btn);
             });
+        } else if (selectedQuizType === 'initialConsonant') {
+            // 초성퀴즈: 초성만 보여주고 사자성어를 맞추는 퀴즈
+            const initials = getInitialConsonants(currentQuestion.사자성어);
+            const initialsDisplay = initials.join('');
+            quizQuestion.innerHTML = `초성: <span style="color: #1e90ff; font-weight: bold;">${initialsDisplay}</span><br>정답을 입력하세요:`;
+
+            // 입력 필드 및 힌트 버튼 생성
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.id = 'quiz-input';
+            input.placeholder = '정답을 입력하세요';
+            input.classList.add('quiz-input');
+
+            const hintBtn = document.createElement('button');
+            hintBtn.innerText = '힌트';
+            hintBtn.classList.add('hint-btn');
+
+            const answerBtn = document.createElement('button');
+            answerBtn.innerText = '확인';
+            answerBtn.classList.add('quiz-option-btn');
+
+            quizOptions.innerHTML = '';
+            quizOptions.appendChild(input);
+            quizOptions.appendChild(answerBtn);
+            quizOptions.appendChild(hintBtn);
+
+            // 정답 확인 버튼 이벤트
+            answerBtn.addEventListener('click', () => {
+                const userAnswer = input.value.trim();
+                if (userAnswer === currentQuestion.사자성어) {
+                    quizFeedback.classList.add('correct');
+                    quizFeedback.innerText = `정답입니다! ${currentQuestion.뜻} (${currentQuestion.중국어})`;
+                    let currentScore = parseInt(currentScoreSpan.innerText);
+                    currentScore += 10;
+                    currentScoreSpan.innerText = currentScore.toString();
+                } else {
+                    quizFeedback.classList.remove('correct');
+                    quizFeedback.innerText = '오답입니다.';
+                    let currentScore = parseInt(currentScoreSpan.innerText);
+                    currentScore -= 5;
+                    if (currentScore < 0) currentScore = 0;
+                    currentScoreSpan.innerText = currentScore.toString();
+                }
+                nextQuizBtn.style.display = 'block';
+                // 입력 필드 및 버튼 비활성화
+                input.disabled = true;
+                answerBtn.disabled = true;
+                hintBtn.disabled = true;
+            });
+
+            // 힌트 버튼 이벤트
+            hintBtn.addEventListener('click', () => {
+                quizFeedback.innerText = `뜻: ${currentQuestion.뜻}`;
+            });
         }
 
         // Reset quizFeedback and hide nextQuizBtn
@@ -547,61 +613,23 @@ document.addEventListener('DOMContentLoaded', () => {
         nextQuizBtn.style.display = 'none';
     }
 
-    // 다음 퀴즈 로드 버튼 이벤트
-    if (nextQuizBtn) {
-        nextQuizBtn.addEventListener('click', () => {
-            loadNextQuizQuestion();
-        });
-    }
-
-    // ---------------------------
-    // 6. "학습 완료" 체크박스 기능 개선
-    // ---------------------------
-
-    markCompletedCheckbox.addEventListener('change', () => {
-        if (markCompletedCheckbox.checked && currentSajaseongeo) {
-            console.log(`학습 완료: ${currentSajaseongeo.사자성어}`);
-            markSajaseongeoAsLearned(currentSajaseongeo.사자성어);
-            // 다음 사자성어로 이동
-            moveToNextSajaseongeo();
+    // 초성 추출 함수
+    function getInitialConsonants(text) {
+        const initialConsonants = [
+            'ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'
+        ];
+        const initials = [];
+        for (let char of text) {
+            const code = char.charCodeAt(0) - 0xAC00;
+            if (code >= 0 && code < 11172) { // Hangul syllables
+                const initialIndex = Math.floor(code / 588);
+                const initial = initialConsonants[initialIndex];
+                initials.push(initial);
+            } else {
+                initials.push(char); // Non-Hangul characters
+            }
         }
-    });
-
-    function moveToNextSajaseongeo() {
-        // 현재 인덱스 저장
-        saveProgress(selectedLevel, currentIndex);
-        // 다음 인덱스로 이동
-        if (currentIndex < shuffledIndices.length - 1) {
-            currentIndex++;
-            displaySajaseongeo();
-            // 체크박스 초기화
-            markCompletedCheckbox.checked = false;
-        } else {
-            alert('마지막 사자성어입니다.');
-            markCompletedCheckbox.checked = false;
-        }
-    }
-
-    // ---------------------------
-    // 7. 사자성어 데이터 로드
-    // ---------------------------
-
-    function loadSajaseongeoData() {
-        fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                sajaseongeoData = data[selectedLevel] && data[selectedLevel]["학습하기"] ? data[selectedLevel]["학습하기"] : [];
-
-                if (selectedQuizType) {
-                    initializeQuiz(selectedQuizType);
-                }
-
-                initializeStudy();
-            })
-            .catch(error => {
-                console.error('Error loading 사자성어 data:', error);
-                sajaseongeoData = [];
-            });
+        return initials;
     }
 
     // ---------------------------
@@ -620,6 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (availableIndices.length === 0) {
             sajaseongeoChinese.innerText = '모든 사자성어를 학습 완료했습니다!';
+            sajaseongeoKorean.innerText = '';
             sajaseongeoMeaning.innerText = '';
             // "유래" 정보 비우기
             sajaseongeoOrigin.innerText = '';
@@ -640,8 +669,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         currentSajaseongeo = sajaseongeoData[availableIndices[currentIndex]];
-        sajaseongeoChinese.innerText = currentSajaseongeo.중국어;
-        sajaseongeoKorean.innerText = currentSajaseongeo.사자성어;
+        sajaseongeoChinese.innerText = currentSajaseongeo.중국어; // 사자성어의 중국어 표현
+        sajaseongeoKorean.innerText = currentSajaseongeo.사자성어; // 한글 읽기
         sajaseongeoMeaning.innerText = currentSajaseongeo.뜻;
 
         // 주석 표시 영역 초기화
@@ -791,6 +820,97 @@ document.addEventListener('DOMContentLoaded', () => {
             currentTypingInterval = null;
         }
         sajaseongeoOrigin.innerText = '';
+    }
+
+    // ---------------------------
+    // 15. 사자성어 데이터 로드
+    // ---------------------------
+
+    function loadSajaseongeoData() {
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                sajaseongeoData = data[selectedLevel] && data[selectedLevel]["학습하기"] ? data[selectedLevel]["학습하기"] : [];
+
+                if (selectedQuizType) {
+                    initializeQuiz(selectedQuizType);
+                }
+
+                initializeStudy();
+            })
+            .catch(error => {
+                console.error('Error loading 사자성어 data:', error);
+                sajaseongeoData = [];
+            });
+    }
+
+    // ---------------------------
+    // 16. 사자성어 표시 함수 (학습하기 화면)
+    // ---------------------------
+
+    function displaySajaseongeo() {
+        if (sajaseongeoData.length === 0) return;
+        const learnedSajaseongeo = getLearnedSajaseongeo()[selectedLevel] || [];
+        const availableIndices = shuffledIndices.filter(index => !learnedSajaseongeo.includes(sajaseongeoData[index].사자성어));
+        
+        // 콘솔 로그 (디버깅용)
+        console.log(`Available Indices: ${availableIndices}`);
+        console.log(`Current Index: ${currentIndex}`);
+        console.log(`Total Available: ${availableIndices.length}`);
+
+        if (availableIndices.length === 0) {
+            sajaseongeoChinese.innerText = '모든 사자성어를 학습 완료했습니다!';
+            sajaseongeoKorean.innerText = '';
+            sajaseongeoMeaning.innerText = '';
+            // "유래" 정보 비우기
+            sajaseongeoOrigin.innerText = '';
+            // 스피커 버튼 비활성화
+            speakBtn.disabled = true;
+            // 학습완료 체크박스 비활성화
+            markCompletedCheckbox.checked = false;
+            markCompletedCheckbox.disabled = true;
+            currentSajaseongeo = null;
+            // 타이핑 인터벌 정리
+            clearTyping();
+            return;
+        }
+        
+        // 현재 인덱스가 범위를 벗어나지 않도록 조정
+        if (currentIndex >= availableIndices.length) {
+            currentIndex = availableIndices.length - 1;
+        }
+        
+        currentSajaseongeo = sajaseongeoData[availableIndices[currentIndex]];
+        sajaseongeoChinese.innerText = currentSajaseongeo.중국어; // 사자성어의 중국어 표현
+        sajaseongeoKorean.innerText = currentSajaseongeo.사자성어; // 한글 읽기
+        sajaseongeoMeaning.innerText = currentSajaseongeo.뜻;
+
+        // 주석 표시 영역 초기화
+        const annotationsDiv = document.getElementById('sajaseongeo-annotations');
+        annotationsDiv.innerHTML = ''; // 기존 내용 삭제
+
+        if (currentSajaseongeo.annotations && currentSajaseongeo.annotations.length > 0) {
+            currentSajaseongeo.annotations.forEach(annotation => {
+                const span = document.createElement('span');
+                span.classList.add('annotation');
+                span.innerHTML = `${annotation.meaning} (${annotation.character}) `;
+                annotationsDiv.appendChild(span);
+            });
+        }
+
+        // 학습완료 체크박스 상태 설정
+        markCompletedCheckbox.disabled = false;
+        markCompletedCheckbox.checked = learnedSajaseongeo.includes(currentSajaseongeo.사자성어);
+
+        // 유래 표시 및 타이핑 효과
+        if (currentSajaseongeo.유래) {
+            typeText(sajaseongeoOrigin, currentSajaseongeo.유래, 50);
+        } else {
+            sajaseongeoOrigin.innerText = '';
+        }
+
+        // 스피커 버튼 활성화
+        speakBtn.disabled = false;
     }
 
 });
