@@ -292,6 +292,126 @@
                     {"character": "西", "meaning": "서: 서쪽"},
                     {"character": "答", "meaning": "답: 대답"}
                 ]
+            },
+                        {
+                "사자성어": "각골난망",
+                "뜻": "은혜를 잊지 않음",
+                "중국어": "刻骨難忘",
+                "유래": "뼈에 새겨 잊지 못한다는 뜻",
+                "annotations": [
+                    {"character": "刻", "meaning": "각: 새길"},
+                    {"character": "骨", "meaning": "골: 뼈"},
+                    {"character": "難", "meaning": "난: 어려울"},
+                    {"character": "忘", "meaning": "망: 잊을"}
+                ]
+            },
+            {
+                "사자성어": "결초보은",
+                "뜻": "죽어서도 은혜를 잊지 않음",
+                "중국어": "結草報恩",
+                "유래": "풀을 묶어 은혜를 갚는다는 뜻",
+                "annotations": [
+                    {"character": "結", "meaning": "결: 맺을"},
+                    {"character": "草", "meaning": "초: 풀"},
+                    {"character": "報", "meaning": "보: 갚을"},
+                    {"character": "恩", "meaning": "은: 은혜"}
+                ]
+            },
+            {
+                "사자성어": "고장난명",
+                "뜻": "혼자서는 일을 이루기 어려움",
+                "중국어": "孤掌難鳴",
+                "유래": "한 손으로는 소리를 내기 어렵다는 뜻",
+                "annotations": [
+                    {"character": "孤", "meaning": "고: 외로울"},
+                    {"character": "掌", "meaning": "장: 손바닥"},
+                    {"character": "難", "meaning": "난: 어려울"},
+                    {"character": "鳴", "meaning": "명: 울다"}
+                ]
+            },
+            {
+                "사자성어": "교학상장",
+                "뜻": "가르치고 배우면서 서로 성장함",
+                "중국어": "敎學相長",
+                "유래": "가르치고 배우는 일이 서로 발전시킨다는 뜻",
+                "annotations": [
+                    {"character": "敎", "meaning": "교: 가르칠"},
+                    {"character": "學", "meaning": "학: 배울"},
+                    {"character": "相", "meaning": "상: 서로"},
+                    {"character": "長", "meaning": "장: 자랄"}
+                ]
+            },
+            {
+                "사자성어": "구우일모",
+                "뜻": "아주 많은 것 중의 하나",
+                "중국어": "九牛一毛",
+                "유래": "아홉 마리 소 중의 한 가닥 털",
+                "annotations": [
+                    {"character": "九", "meaning": "구: 아홉"},
+                    {"character": "牛", "meaning": "우: 소"},
+                    {"character": "一", "meaning": "일: 한"},
+                    {"character": "毛", "meaning": "모: 털"}
+                ]
+            },
+            {
+                "사자성어": "군웅할거",
+                "뜻": "여러 영웅들이 각자 세력을 잡음",
+                "중국어": "群雄割據",
+                "유래": "여러 영웅들이 각자 세력을 잡고 다툼",
+                "annotations": [
+                    {"character": "群", "meaning": "군: 무리"},
+                    {"character": "雄", "meaning": "웅: 영웅"},
+                    {"character": "割", "meaning": "할: 나눌"},
+                    {"character": "據", "meaning": "거: 의지할"}
+                ]
+            },
+            {
+                "사자성어": "금의환향",
+                "뜻": "성공하여 고향에 돌아옴",
+                "중국어": "錦衣還鄕",
+                "유래": "비단옷을 입고 고향에 돌아온다는 뜻",
+                "annotations": [
+                    {"character": "錦", "meaning": "금: 비단"},
+                    {"character": "衣", "meaning": "의: 옷"},
+                    {"character": "還", "meaning": "환: 돌아올"},
+                    {"character": "鄕", "meaning": "향: 고향"}
+                ]
+            },
+            {
+                "사자성어": "기사회생",
+                "뜻": "거의 죽을 뻔하다가 다시 살아남",
+                "중국어": "起死回生",
+                "유래": "죽음에서 일어나 다시 살아남",
+                "annotations": [
+                    {"character": "起", "meaning": "기: 일어날"},
+                    {"character": "死", "meaning": "사: 죽을"},
+                    {"character": "回", "meaning": "회: 돌아올"},
+                    {"character": "生", "meaning": "생: 살"}
+                ]
+            },
+            {
+                "사자성어": "동분서주",
+                "뜻": "동쪽으로 서쪽으로 바쁘게 돌아다님",
+                "중국어": "東奔西走",
+                "유래": "동쪽으로 달리고 서쪽으로 달림",
+                "annotations": [
+                    {"character": "東", "meaning": "동: 동쪽"},
+                    {"character": "奔", "meaning": "분: 달릴"},
+                    {"character": "西", "meaning": "서: 서쪽"},
+                    {"character": "走", "meaning": "주: 달릴"}
+                ]
+            },
+            {
+                "사자성어": "마부위침",
+                "뜻": "끊임없는 노력으로 성공함",
+                "중국어": "磨斧爲針",
+                "유래": "도끼를 갈아 바늘을 만든다는 뜻",
+                "annotations": [
+                    {"character": "磨", "meaning": "마: 갈다"},
+                    {"character": "斧", "meaning": "부: 도끼"},
+                    {"character": "爲", "meaning": "위: 만들다"},
+                    {"character": "針", "meaning": "침: 바늘"}
+                ]
             }
         ]
     },
