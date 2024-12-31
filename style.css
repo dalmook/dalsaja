@@ -1,10 +1,13 @@
 /* style.css */
+
+/* 기본 폰트 정의 */
 @font-face {
     font-family: 'hanchanzhengkaiti';
     src: url('./hanchanzhengkaiti.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+
 /* 기본 리셋 */
 * {
     margin: 0;
@@ -148,6 +151,12 @@ body {
     color: #2980b9;
 }
 
+#sajaseongeo-korean {
+    font-size: 1.5em;
+    color: #34495e;
+    margin-right: 15px;
+}
+
 .speak-btn {
     font-size: 1.5em;
     cursor: pointer;
@@ -164,14 +173,14 @@ body {
 
 /* 주석 표시 영역 */
 .sajaseongeo-annotations {
-    display: block;
+    display: flex;
     justify-content: center;
     margin-bottom: 15px;
     flex-wrap: wrap;
 }
 
 .sajaseongeo-annotations .annotation {
-    display: inline; 
+    display: inline-block; 
     background-color: #ecf0f1;
     padding: 5px 10px;
     margin: 5px;
@@ -210,6 +219,7 @@ body {
     background-color: #8e44ad;
     font-size: 1em;
     color: #ecf0f1;
+    font-style: italic;
 }
 
 /* 유래 텍스트 스타일 */
@@ -481,6 +491,40 @@ body {
     color: #2c3e50;
 }
 
+/* 추가된 스타일: 초성퀴즈 관련 요소 */
+.quiz-input {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1em;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.quiz-input:focus {
+    border-color: #3498db;
+}
+
+.hint-btn {
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #9b59b6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.hint-btn:hover {
+    background-color: #8e44ad;
+    transform: scale(1.05);
+}
+
 /* 반응형 디자인 강화 */
 @media (max-width: 1024px) {
     .sajaseongeo-info {
@@ -518,6 +562,14 @@ body {
         margin: 20px auto;
         font-size: 0.95em;
     }
+
+    .quiz-input {
+        width: 90%;
+    }
+
+    .hint-btn {
+        width: 80%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -552,6 +604,14 @@ body {
         margin: 18px auto;
         font-size: 0.9em;
     }
+
+    .quiz-input {
+        width: 100%;
+    }
+
+    .hint-btn {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -585,6 +645,14 @@ body {
     }
 
     .sajaseongeo-origin {
+        font-size: 0.9em;
+    }
+
+    .quiz-input {
+        font-size: 0.9em;
+    }
+
+    .hint-btn {
         font-size: 0.9em;
     }
 }
