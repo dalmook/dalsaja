@@ -173,6 +173,126 @@
     },
     "중급": {
         "학습하기": [
+            {
+                "사자성어": "개과천선",
+                "뜻": "지난날의 잘못을 고치고 착하게 됨",
+                "중국어": "改過遷善",
+                "유래": "잘못을 고치고 선을 행한다는 뜻",
+                "annotations": [
+                    {"character": "改", "meaning": "개: 고칠"},
+                    {"character": "過", "meaning": "과: 잘못"},
+                    {"character": "遷", "meaning": "천: 옮길"},
+                    {"character": "善", "meaning": "선: 착할"}
+                ]
+            },
+            {
+                "사자성어": "고진감래",
+                "뜻": "고생 끝에 낙이 온다",
+                "중국어": "苦盡甘來",
+                "유래": "고생이 끝나면 즐거움이 온다는 뜻",
+                "annotations": [
+                    {"character": "苦", "meaning": "고: 쓸"},
+                    {"character": "盡", "meaning": "진: 다할"},
+                    {"character": "甘", "meaning": "감: 달다"},
+                    {"character": "來", "meaning": "래: 오다"}
+                ]
+            },
+            {
+                "사자성어": "과유불급",
+                "뜻": "지나침은 미치지 못함과 같다",
+                "중국어": "過猶不及",
+                "유래": "지나친 것은 오히려 모자란 것보다 못하다는 뜻",
+                "annotations": [
+                    {"character": "過", "meaning": "과: 지나칠"},
+                    {"character": "猶", "meaning": "유: 오히려"},
+                    {"character": "不", "meaning": "불: 아니다"},
+                    {"character": "及", "meaning": "급: 미치다"}
+                ]
+            },
+            {
+                "사자성어": "교언영색",
+                "뜻": "남에게 아첨하는 말과 태도",
+                "중국어": "巧言令色",
+                "유래": "교묘한 말과 아첨하는 얼굴빛",
+                "annotations": [
+                    {"character": "巧", "meaning": "교: 교묘할"},
+                    {"character": "言", "meaning": "언: 말"},
+                    {"character": "令", "meaning": "영: 아첨할"},
+                    {"character": "色", "meaning": "색: 얼굴빛"}
+                ]
+            },
+            {
+                "사자성어": "구사일생",
+                "뜻": "죽을 고비를 여러 번 넘기고 겨우 살아남",
+                "중국어": "九死一生",
+                "유래": "아홉 번 죽을 고비를 넘기고 한 번 살아남",
+                "annotations": [
+                    {"character": "九", "meaning": "구: 아홉"},
+                    {"character": "死", "meaning": "사: 죽을"},
+                    {"character": "一", "meaning": "일: 한"},
+                    {"character": "生", "meaning": "생: 살"}
+                ]
+            },
+            {
+                "사자성어": "군계일학",
+                "뜻": "평범한 사람들 중 뛰어난 한 사람",
+                "중국어": "群鷄一鶴",
+                "유래": "닭 무리 속에 한 마리 학",
+                "annotations": [
+                    {"character": "群", "meaning": "군: 무리"},
+                    {"character": "鷄", "meaning": "계: 닭"},
+                    {"character": "一", "meaning": "일: 한"},
+                    {"character": "鶴", "meaning": "학: 학"}
+                ]
+            },
+            {
+                "사자성어": "금상첨화",
+                "뜻": "좋은 일에 또 좋은 일이 더해짐",
+                "중국어": "錦上添花",
+                "유래": "비단 위에 꽃을 더함",
+                "annotations": [
+                    {"character": "錦", "meaning": "금: 비단"},
+                    {"character": "上", "meaning": "상: 위"},
+                    {"character": "添", "meaning": "첨: 더할"},
+                    {"character": "花", "meaning": "화: 꽃"}
+                ]
+            },
+            {
+                "사자성어": "기고만장",
+                "뜻": "기운이 하늘을 찌를 듯이 높음",
+                "중국어": "氣高萬丈",
+                "유래": "기운이 만 장이나 높음",
+                "annotations": [
+                    {"character": "氣", "meaning": "기: 기운"},
+                    {"character": "高", "meaning": "고: 높을"},
+                    {"character": "萬", "meaning": "만: 만"},
+                    {"character": "丈", "meaning": "장: 길이 단위"}
+                ]
+            },
+            {
+                "사자성어": "다다익선",
+                "뜻": "많으면 많을수록 좋다",
+                "중국어": "多多益善",
+                "유래": "많으면 많을수록 더욱 좋음",
+                "annotations": [
+                    {"character": "多", "meaning": "다: 많을"},
+                    {"character": "多", "meaning": "다: 많을"},
+                    {"character": "益", "meaning": "익: 더할"},
+                    {"character": "善", "meaning": "선: 좋을"}
+                ]
+            },
+            {
+                "사자성어": "동문서답",
+                "뜻": "묻는 말에 엉뚱한 대답을 함",
+                "중국어": "東問西答",
+                "유래": "동쪽을 묻는데 서쪽을 대답함",
+                "annotations": [
+                    {"character": "東", "meaning": "동: 동쪽"},
+                    {"character": "問", "meaning": "문: 물을"},
+                    {"character": "西", "meaning": "서: 서쪽"},
+                    {"character": "答", "meaning": "답: 대답"}
+                ]
+            }
         ]
     },
     "고급": {
