@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentSajaseongeo.annotations.forEach(annotation => {
                 const span = document.createElement('span');
                 span.classList.add('annotation');
-                span.innerHTML = `${annotation.meaning} (${annotation.character}) `;
+                span.innerHTML = `${annotation.meaning}`;
                 annotationsDiv.appendChild(span);
             });
         }
