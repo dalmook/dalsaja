@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sajaseongeoMeaning = document.getElementById('sajaseongeo-meaning');
     const speakBtn = document.getElementById('speak-btn');
     const prevBtn = document.getElementById('prev-btn');
+    const firstBtn = document.getElementById('first-btn');
     const nextBtn = document.getElementById('next-btn');
     const orderOptions = document.getElementsByName('order');
     const markCompletedCheckbox = document.getElementById('mark-completed');
@@ -780,6 +781,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+    if (firstBtn) {
+        firstBtn.addEventListener('click', () => {
+            console.log('처음 버튼 클릭됨'); // 디버깅용 로그
+            if (currentIndex < shuffledIndices.length - 1) {
+                currentIndex++;
+                stopAllTTS();
+                displaySajaseongeo();
+                saveProgress(selectedLevel, currentIndex);
+            } else {
+                alert('마지막 사자성어입니다.');
+            }
+        });
+      }
 
     // ---------------------------
     // 14. clearTyping 함수 정의
