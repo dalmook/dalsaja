@@ -13,6 +13,14 @@
                 "meaning": "가: 집"
             },
             {
+                "character": "家",
+                "meaning": "가: 집"
+            },
+            {
+                "character": "戶",
+                "meaning": "호: 문"
+            },
+            {
                 "character": "戶",
                 "meaning": "호: 문"
             }
@@ -346,6 +354,10 @@
                 "meaning": "다: 많다"
             },
             {
+                "character": "多",
+                "meaning": "다: 많다"
+            },
+            {
                 "character": "益",
                 "meaning": "익: 더하다"
             },
@@ -539,6 +551,10 @@
                 "meaning": "신: 믿다"
             },
             {
+                "character": "半",
+                "meaning": "반: 절반"
+            },
+            {
                 "character": "疑",
                 "meaning": "의: 의심하다"
             }
@@ -557,6 +573,10 @@
             {
                 "character": "發",
                 "meaning": "발: 쏘다"
+            },
+            {
+                "character": "百",
+                "meaning": "백: 백"
             },
             {
                 "character": "中",
@@ -629,6 +649,10 @@
             {
                 "character": "似",
                 "meaning": "사: 같다"
+            },
+            {
+                "character": "夢",
+                "meaning": "몽: 꿈"
             }
         ]
     },
@@ -673,6 +697,10 @@
             {
                 "character": "水",
                 "meaning": "수: 물"
+            },
+            {
+                "character": "戰",
+                "meaning": "전: 싸움"
             }
         ]
     },
@@ -685,6 +713,14 @@
             {
                 "character": "三",
                 "meaning": "삼: 셋"
+            },
+            {
+                "character": "三",
+                "meaning": "삼: 셋"
+            },
+            {
+                "character": "五",
+                "meaning": "오: 다섯"
             },
             {
                 "character": "五",
@@ -706,6 +742,10 @@
             {
                 "character": "扶",
                 "meaning": "부: 돕다"
+            },
+            {
+                "character": "相",
+                "meaning": "상: 서로"
             },
             {
                 "character": "助",
