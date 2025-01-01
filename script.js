@@ -785,7 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
         firstBtn.addEventListener('click', () => {
             console.log('처음 버튼 클릭됨'); // 디버깅용 로그
             if (currentIndex < shuffledIndices.length - 1) {
-                currentIndex++;
+                currentIndex = 0;
                 stopAllTTS();
                 displaySajaseongeo();
                 saveProgress(selectedLevel, currentIndex);
