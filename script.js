@@ -370,12 +370,6 @@ document.addEventListener('DOMContentLoaded', () => {
             utteranceChinese.lang = 'zh-CN';
             window.speechSynthesis.speak(utteranceChinese);
             currentUtterances.push(utteranceChinese);
-
-            // "유래" 읽기 음성 추가 (타이핑 완료 후)
-            if (originText.trim() !== '') {
-                // readAloud(currentSajaseongeo.유래); // 삭제됨
-                // typeText 함수의 콜백에서 readAloud를 삭제했으므로 여기서는 필요없음
-            }
         }
         else {
             console.warn("이 브라우저는 음성 합성을 지원하지 않습니다.");
