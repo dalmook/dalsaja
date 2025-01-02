@@ -384,11 +384,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 모든 TTS 중지 함수
     function stopAllTTS() {
+        console.log("stopAllTTS() 호출됨");
+    
+        // 브라우저 환경에서 speechSynthesis 중지
         if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
+            console.log("speechSynthesis 중지됨");
         }
+    
+        // 안드로이드 환경에서 TTS 중지
+        if (typeof Android !== 'undefined' && Android.stop) {
+            Android.stop();
+            console.log("안드로이드 TTS 중지 요청");
+        }
+    
         currentUtterances = [];
     }
+    
 
     // ---------------------------
     // 7. 퀴즈 게임 함수
