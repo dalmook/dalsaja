@@ -1,7 +1,7 @@
 /* style.css */
 @font-face {
     font-family: 'hanchanzhengkaiti';
-    src: url('./hanchanzhengkaiti.ttf') format('truetype');
+    src: url('./hanchanzhengkaiti.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
