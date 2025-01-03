@@ -232,7 +232,7 @@ body {
 .navigation-buttons button {
     padding: 12px 25px;
     margin: 0 15px;
-    font-size: 1em;
+    font-size: 0.7em;
     cursor: pointer;
     background-color: #1abc9c;
     color: #fff;
